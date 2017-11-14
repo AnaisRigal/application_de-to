@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>DE - TO !</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  
+        <script type="text/javascript" src="creerEvenemt.js"></script>
+   
+    </head>
+    <body np-app="app">
+        <!-- Conteneur principal -->
+        <div class="container-fluid" ng-controller="Create">
+            <div class="row">
+
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h5>Informations de l'évènement</h5>
+                        </div>
+                        <div class="panel-body">
+                            <label for="operande1" class="col-sm-3 col-xs-12 control-label">Nom : </label>
+                            <div class="col-sm-8 col-xs-12 form-group">
+                                <input type="text" class="form-control" id="nomEvenmt" autofocus tabindex="1" ng-model="nomEvenmt">
+                            </div>
+                            <label for="operande1" class="col-sm-3 col-xs-12 control-label">Description : </label>
+                            <div class="col-sm-8 col-xs-12 form-group">
+                                <input type="text" class="form-control" id="description" autofocus tabindex="1" ng-model="description">
+                            </div>
+
+                            <input class="btn btn-lg btn-primary btn-block col-sm-3 col-xs-3" type="submit" value="Créer l'évènement" ng-click="createEvent()">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h5>Liste des crénaux</h5>
+                        </div>
+                        <div class="panel-body">
+                            <label for="operande1" class="col-sm-3 col-xs-6 control-label">Date : </label>
+                            <label for="operande1" class="col-sm-3 col-xs-6 control-label">Heure début : </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h5>Crénaux de l'évènement</h5>
+                        </div>
+                        <div class="panel-body">
+                            <label for="operande1" class="col-sm-3 col-xs-12 control-label">Date : </label>
+                            <div class="col-sm-8 col-xs-12 form-group">
+                                <input type="text" class="form-control" id="operande1" placeholder="0" autofocus tabindex="1" ng-model="data.nom">
+                            </div>
+                            <label for="operande1" class="col-sm-3 col-xs-12 control-label">Heure début : </label>
+                            <div class="col-sm-8 col-xs-12 form-group">
+                                <input type="text" class="form-control" id="operande1" placeholder="0" autofocus tabindex="1" ng-model="data.description">
+                            </div>
+
+                            <input class="btn btn-lg btn-info btn-block col-sm-3 col-xs-3" type="submit" value="Ajouter le crénau">
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>      
+    </body>
+</html>
+
