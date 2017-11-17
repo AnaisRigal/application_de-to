@@ -6,6 +6,17 @@
 
 var app = angular.module("app", [])
         .service('MonService', function () {
-            
+
         })
 
+        .controller("MonCtrl", function($scope,$http) { 
+            
+                $scope.listeEvenements = function(){
+                    $http({method: 'GET', url:'/events'}).then(function(data, status, headers, config) {
+                    // code si réussite
+                    console.log(data);
+                    });
+                    
+                }
+            
+                });
