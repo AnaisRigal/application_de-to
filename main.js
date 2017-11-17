@@ -24,7 +24,13 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + "/appclt"));
 
 // pour tester les objets /////////////////////////////////////////////////////////////  
-
+// Constructeur pour les événements simplifiés
+function EvenementSimple(id,nom) {
+  // l'id de l'evenement
+  this.id = id;
+  //le nom de l'evenement
+  this.nom = nom;
+}
         
     app.get('/API/test',function(req,res) {
     res.send('test');

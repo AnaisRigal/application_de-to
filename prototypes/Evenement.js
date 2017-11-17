@@ -79,3 +79,6 @@ var ajouterCreneau = function(id, dateHeure){
 	listeEvenements[id].ajouterCreneau(dateHeure);
 	return 1;
 }
+
+exports.creerEvenement = creerEvenement;
+exports.ajouterCreneau = ajouterCreneau;
