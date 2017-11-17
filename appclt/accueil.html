@@ -6,25 +6,24 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>DE - TO !</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script type="text/javascript" src="style.js"></script>
-          <link rel="stylesheet" href="styles.css">
-          
          <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
         <!-- Optional theme -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-        <!-- Latest compiled and minified JavaScript -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<script type="text/javascript" src="service.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>         
+    <script type="text/javascript" src="accueil.js"></script>
 
     </head>
         
 <body >
+   <div ng-app="app"> 
+    <div class="container" ng-controller="MonCtrl">
  <link rel="stylesheet" href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css">
 
 <nav class="navbar navbar-default" role="navigation">
@@ -41,9 +40,7 @@ and open the template in the editor.
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="navbar-collapse style= collapse in" id="bs-megadropdown-tabs" style="
-    padding-left: 0px;
-">
+    <div class="navbar-collapse" style="padding-left: 0px" id="bs-megadropdown-tabs">
         <ul class="nav navbar-nav">
             <li><a href="#"><i class="fa fa-calendar"></i> Mes évènements</a></li>
              <li><a href="#"><i class="fa fa-calendar-plus-o"></i> Créer un nouvel évènement</a></li>
@@ -68,8 +65,9 @@ and open the template in the editor.
  </br>
  <h1> Bienvenue sur votre espace personnel ! :)</h1>  
  </br>
- 
+<button type="button" class="btn btn-primary" ng-click="listeEvenements()">Liste événements</button>
 <!-- :::::::::::::::::::::::::::::::::::::::::FIN DU CONTENU DE LA PAGE ::::::::::::::::::::::::::::::::::::::::::-->
-
+    </div>
+    </div>
         </body>
 </html>
