@@ -6,6 +6,8 @@
 
 var metier = require('./metier');
 
+//déclaration du prototype
+var evenement = require('./prototypes/Evenement');
 // déclarations de variables
 var MongoClient = require("mongodb").MongoClient;
 
@@ -21,17 +23,6 @@ app.use(bodyParser.json());
 // partie page WEB 
 app.use(express.static(__dirname + "/appclt"));
 
-
-
-// pour tester les objets /////////////////////////////////////////////////////////////
-function Position(id, somme) {
-  // l'id du compte
-  this.id = id
-  // la somme
-  this.somme = somme;
-  // la date de dernière opération
-  this.date = new Date();
-}
 // pour tester les objets /////////////////////////////////////////////////////////////  
 
         
@@ -50,7 +41,7 @@ function Position(id, somme) {
             if (error) throw error;
 
             results.forEach(function(o, i) {
-                var toto= new Position(o.id, o.nom);
+                var toto= new EvenementSimple(o.id, o.nom);
                r.push(toto);
                        //  console.log(toto);
             });
