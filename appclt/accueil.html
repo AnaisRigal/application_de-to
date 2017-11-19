@@ -63,10 +63,11 @@ and open the template in the editor.
 </nav>
 <!-- :::::::::::::::::::::::::::::::::::::::::CONTENU DE LA PAGE ::::::::::::::::::::::::::::::::::::::::::-->
  </br>
- <h1> Bienvenue sur votre espace personnel ! :)</h1>  
+ <h1> Voici les différents évènements : </h1>  
  </br>
-<button type="button" class="btn btn-primary" ng-click="listeEvenements()">Liste événements</button>
-<!-- :::::::::::::::::::::::::::::::::::::::::FIN DU CONTENU DE LA PAGE ::::::::::::::::::::::::::::::::::::::::::-->
+                            <div class="panel-body">
+                                    <p ng-repeat="event in events">{{event}}</p>
+                            </div>  
     </div>
     </div>
         </body>

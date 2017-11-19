@@ -8,15 +8,18 @@ var app = angular.module("app", [])
         .service('MonService', function () {
 
         })
+// Constructeur pour les événements simplifiés
 
         .controller("MonCtrl", function($scope,$http) { 
-            
-                $scope.listeEvenements = function(){
-                    $http({method: 'GET', url:'/events'}).then(function(data, status, headers, config) {
-                    // code si réussite
+                   $http({method: 'GET', url:'/events'}).then(function(data, status, headers, config) {
+                    $scope.events = new Array();
+                    for (var i = 0; i< data.data.length;i++){
+                        console.log(data.data[i]);
+                        var d = data.data[i];
+                        var a = d.id+".  "+d.nom;
+                        $scope.events.push(a);
+                    }
                     console.log(data);
                     });
-                    
-                }
             
                 });
