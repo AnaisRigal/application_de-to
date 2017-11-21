@@ -9,9 +9,11 @@ var app = angular.module('app', [])
                 nomEvenmt: nomEvenmt,
                 description: description
             };
+            console.log(data);
             $http.post('/createEvent', JSON.stringify(data)).then(function (response) {
                 if (response.data)
                     $scope.msg = "Post Data Submitted Successfully!";
+                    
             }, function (response) {
                 $scope.msg = "Service not Exists";
             });
