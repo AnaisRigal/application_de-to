@@ -62,10 +62,27 @@ app.get('/events', function (req, res) {
 });
 
 app.post('/createEvent', function (req, res) {
-   var testEvent = new EvenementSimple("1", "monTest", "description");
-    res.send(testEvent);
+    MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
 
 
+        if (err) {
+            return console.error('Connection failed', err);
+        }
+        var nomRecu = new String;
+        var descriptionRecue = new String;
+        nomRecu = req.param("nomEvenmt");
+        descriptionRecue = req.param("description");
+
+
+        var objNew = {id: "12", nom: nomRecu, description: descriptionRecue};
+
+        db.collection("evenements").insert(objNew, null, function (error, results) {
+            if (error)
+                throw error;
+
+            console.log("L'événement a bien été inséré");
+        });
+    });
 });
 
 app.get('/getEvent', function (req, res) {
