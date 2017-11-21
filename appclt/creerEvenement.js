@@ -6,8 +6,8 @@ var app = angular.module('app', [])
         $scope.msg = null;
         $scope.createEvent = function (nomEvenmt,description) {
             var data = {
-                nomEvenmt: nomEvenmt,
-                description: description
+                nomEvenmt: $scope.nomEvenmt,
+                description: $scope.description
             };
             console.log(data);
             $http.post('/createEvent', JSON.stringify(data)).then(function (response) {
