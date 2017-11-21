@@ -61,7 +61,7 @@ app.get('/events', function (req, res) {
     });
 });
 
-app.put('/createEvent', function (req, res) {
+app.post('/createEvent', function (req, res) {
    var testEvent = new EvenementSimple("1", "monTest", "description");
     res.send(testEvent);
 

@@ -17,8 +17,13 @@ var app = angular.module('app', [])
             }, function (response) {
                 $scope.msg = "Service not Exists";
             });
-            $scope.nomEvenmt='';
-            $scope.description='';
+            
+            document.getElementById("nomEvenmt").disabled = true
+                    document.getElementById("description").disabled = true
+                    document.getElementById("btnCreer").disabled = true
+                    document.getElementById("nomCrenaux").disabled = false
+                    document.getElementById("descCrenaux").disabled = false
+                    document.getElementById("addCrenaux").disabled = false
         };
     });
 
