@@ -38,7 +38,7 @@ app.get('/API/test', function (req, res) {
     res.send('test');
 });
 
-
+// Fait une liste d'évènements
 app.get('/events', function (req, res) {
     MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
         if (err) {
@@ -61,10 +61,9 @@ app.get('/events', function (req, res) {
     });
 });
 
+// Crée un nouvel évènement
 app.post('/createEvent', function (req, res) {
     MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
-
-
         if (err) {
             return console.error('Connection failed', err);
         }
@@ -73,18 +72,16 @@ app.post('/createEvent', function (req, res) {
         nomRecu = req.param("nomEvenmt");
         descriptionRecue = req.param("description");
 
-
         var objNew = {id: "12", nom: nomRecu, description: descriptionRecue};
-
         db.collection("evenements").insert(objNew, null, function (error, results) {
             if (error)
                 throw error;
-
             console.log("L'événement a bien été inséré");
         });
     });
 });
 
+// Recherche et renvoie l'évèneemnt correspondant à l'ID
 app.get('/getEvent', function (req, res) {
     MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
         if (err) {
@@ -93,7 +90,6 @@ app.get('/getEvent', function (req, res) {
         var id = new String;
         id = req.param("id");
         var event = db.collection("evenements").find({id: id});
-
     });
 
 });
