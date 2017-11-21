@@ -16,7 +16,6 @@ var app = express();
 
 var bodyParser = require('body-parser');
 
-
 app.use(bodyParser.json());
 
 // static
@@ -72,7 +71,7 @@ app.post('/createEvent', function (req, res) {
         nomRecu = req.param("nomEvenmt");
         descriptionRecue = req.param("description");
 
-        var objNew = {id: "12", nom: nomRecu, description: descriptionRecue};
+        var objNew = {id: "20", nom: nomRecu, description: descriptionRecue, creneaux: []};
         db.collection("evenements").insert(objNew, null, function (error, results) {
             if (error)
                 throw error;
@@ -81,19 +80,26 @@ app.post('/createEvent', function (req, res) {
     });
 });
 
-// Recherche et renvoie l'évèneemnt correspondant à l'ID
-app.get('/getEvent', function (req, res) {
+app.patch('/patchEventAddCreneau', function (req, res) {
+    console.log("Tentative d'ajout du créneau");
+
     MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
         if (err) {
             return console.error('Connection failed', err);
         }
-        var id = new String;
-        id = req.param("id");
-        var event = db.collection("evenements").find({id: id});
+        var dateHeureRecue = new String;
+        var nomEventRecu = new String;
+        dateHeureRecue = req.param("dateHeure");
+        nomEventRecu = req.param("nomEvenmt");
+        console.log("Tentative d'ajout du créneau");
+        var objNew = {id: "1", dateHeure: dateHeureRecue};
+        db.collection("evenements").update({nom: nomEventRecu}, {$addToSet: {creneaux: objNew}}, function (error, results) {
+            if (error)
+                throw error;
+            console.log("Le créneau a bien été ajouté à l'évènement");
+        });
     });
-
 });
-
 
 app.listen(8080, function () {
     console.log("ça roule")
