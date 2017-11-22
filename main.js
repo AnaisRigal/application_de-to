@@ -50,7 +50,7 @@ app.get('/events', function (req, res) {
                 throw error;
 
             results.forEach(function (o, i) {
-                var toto = new EvenementSimple(o.id, o.nom);
+                var toto = new EvenementSimple(o.id, o.nom,o.description);
                 r.push(toto);
                 //  console.log(toto);
             });
@@ -84,19 +84,33 @@ app.post('/createEvent', function (req, res) {
         });
     });
 });
-
 app.get('/getEvent', function (req, res) {
     MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
         if (err) {
             return console.error('Connection failed', err);
         }
-        var id = new String;
-        id = req.param("id");
-        var event = db.collection("evenements").find({id: id});
+        var pid  = req.param("id");
+        console.log(pid);
+        db.collection("evenements").findOne({id:parseInt(pid,10)}).then(function(doc){
+            var toto = new EvenementSimple(doc.id, doc.nom,doc.description);
+            console.log(toto);
+        })
+       /* db.collection("evenements").findOne({id: parseInt(pid,10)}).toArray(function (error, results) {
+            if (error)
+                throw error;
 
+            results.forEach(function (o, i) {
+                var toto = new EvenementSimple(o.id, o.nom,o.description);
+                  console.log(toto);
+            });
+            //res.send(r);
+            db.close();
+        });
+*/
+        
     });
-
 });
+
 
 
 app.listen(8080, function () {

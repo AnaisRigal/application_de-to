@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 angular.module("app", ['ui.router'])
-
+    
         .service('MonService', function () {
+                var ID ;
                 function EvenementSimple(id,nom) {
                     this.id = id;
                     this.nom = nom;
@@ -17,11 +18,21 @@ angular.module("app", ['ui.router'])
     // Constructeur pour les événements simplifiés
     .component("afficherEvenement", {
         controller:["$scope","$http","$state","$stateParams", function($scope,$http,$state,$stateParams) { 
-                var id=   $stateParams.params1;
-                  
-                    console.log(id);
+                //$scope.id=   $stateParams.param1;
+                  $scope.id = ID;
+                   // console.log( $scope.id);
+                   var data = {id:$scope.id};
+                   $http.get('/getEvent', {params:data}).then(function (response) {
+                    if (response.data)
+                        $scope.msg = "Post Data Submitted Successfully!";
+
+                    }, function (response) {
+                        $scope.msg = response;
+                    });
+
                     
-                   
+                        
+                    
                     
                 }],
                 templateUrl: 'afficherEvenement.html'  
@@ -41,9 +52,11 @@ angular.module("app", ['ui.router'])
                     console.log(data);
                     });
                     
-                    this.ouvrirEvenement = function(event){
-                        console.log(event);
-                        $state.go("afficherEvenement",{param1: event});
+                    this.ouvrirEvenement = function(id){
+                        ID = id;
+                        $state.go("afficherEvenement"
+                        //,{param1: id}
+                                );
                     };
                     
                     
@@ -55,8 +68,11 @@ angular.module("app", ['ui.router'])
 
                 $stateProvider.state('evenements', {
                     url: '/evenements',
-                    component : 'evenements'
-                });
+                    component : 'evenements',
+                   /* params: {
+                        param1: null
+                    }*/
+                    });
                $stateProvider.state('afficherEvenement', {
                     url: '/afficheEvenement',
                     component : 'afficherEvenement'
