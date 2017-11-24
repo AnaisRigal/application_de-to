@@ -92,8 +92,8 @@ app.get('/getEvent', function (req, res) {
         var pid  = req.param("id");
         console.log(pid);
         db.collection("evenements").findOne({id:parseInt(pid,10)}).then(function(doc){
-            var toto = new EvenementSimple(doc.id, doc.nom,doc.description);
-            console.log(toto);
+            var toto = new Evenement(doc.id, doc.nom,doc.description,doc.idCreateur,doc.creneaux,doc.reponses,doc.creneauxFinal);
+            res.send(toto);
         })
        /* db.collection("evenements").findOne({id: parseInt(pid,10)}).toArray(function (error, results) {
             if (error)
@@ -116,3 +116,36 @@ app.get('/getEvent', function (req, res) {
 app.listen(8080, function () {
     console.log("ça roule")
 });
+
+
+function Evenement(id,nom,description,idCreateur,creneaux,reponses,creneauxFinal) {
+  // l'id de l'evenement
+  this.id = id;
+  //le nom de l'evenement
+  this.nom = nom;
+  //la description de l'evenement
+  this.description = description;
+  //l'id du createur de l'evenement
+  this.idCreateur = idCreateur;
+  //le creneau final choisi
+  this.creneauFinal = creneauxFinal;
+  //liste de creneaux
+  this.creneaux = creneaux;
+ //liste de creneaux
+  this.reponses = reponses;
+ 
+  //les réponses pour l'événement
+  this.listeReponses = new Array();
+  //pour garder en mémoire l'id des créneaux
+  this.lastIdCreneau = 0;
+  //fonctionst 
+  this.ajouterCreneau =function(dateHeure){
+      creneau = new Creneau((this.lastIdCreneau+1),dateHeure);
+	  this.lastIdCreneau = this.lastIdCreneau+1;
+      this.listeCreneaux.push(creneau);
+  }
+  this.ajouterReponse =function(idPers, idCreneaux, dispo){
+      reponse = new Reponse(idPers, idCreneaux, dispo);
+      this.listeReponses.push(reponse);
+  }
+}
