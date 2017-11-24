@@ -6,7 +6,8 @@
 angular.module("app", ['ui.router'])
     
         .service('MonService', function () {
-                var ID ;
+                var ID_EVENEMENT ;
+                
                 function EvenementSimple(id,nom) {
                     this.id = id;
                     this.nom = nom;
@@ -14,25 +15,59 @@ angular.module("app", ['ui.router'])
                 EvenementSimple.prototype.print = function () {
                     return this.id + ' ' + this.nom;
                 };
+                
+                function Evenement(id,nom,description,idCreateur,creneaux,reponses,creneauxFinal) {
+                    // l'id de l'evenement
+                    this.id = id;
+                    //le nom de l'evenement
+                    this.nom = nom;
+                    //la description de l'evenement
+                    this.description = description;
+                    //l'id du createur de l'evenement
+                    this.idCreateur = idCreateur;
+                    //le creneau final choisi
+                    this.creneauFinal = creneauxFinal;
+                    //liste de creneaux
+                    this.creneaux = creneaux;
+                   //liste de creneaux
+                    this.reponses = reponses;
+                  }
         })
     // Constructeur pour les événements simplifiés
     .component("afficherEvenement", {
         controller:["$scope","$http","$state","$stateParams", function($scope,$http,$state,$stateParams) { 
                 //$scope.id=   $stateParams.param1;
-                  $scope.id = ID;
+                  $scope.id = ID_EVENEMENT;
                    // console.log( $scope.id);
+                   
                    var data = {id:$scope.id};
                    $http.get('/getEvent', {params:data}).then(function (response) {
-                    if (response.data)
-                        $scope.msg = "Post Data Submitted Successfully!";
-
+                    if (response.data){
+                        var d = response.data;
+                        
+                       // $scope.event = new Evenement(d.id,d.nom,d.description,d.idCreateur,d.creneaux,d.responses,d.creneauFinal);
+                        
+                        $scope.nom =d.nom ;
+                        $scope.description = d.description;
+                        $scope.idCreateur = d.idCreateur;
+                        if (d.creneauFinal== null){
+                             $scope.creneauFinal = "Aucun pour l'instant"
+                        }else{
+                            $scope.creneauFinal = d.creneauFinal;
+                        }
+                        console.log(d.creneaux);
+                        $scope.creneaux = d.creneaux;
+                        console.log(d);
+                        $scope.reponses = d.reponses;
+                         }
                     }, function (response) {
                         $scope.msg = response;
                     });
-
                     
+                $scope.changeValue = function(id){
+                    console.log(id);
                         
-                    
+                }
                     
                 }],
                 templateUrl: 'afficherEvenement.html'  
@@ -53,7 +88,7 @@ angular.module("app", ['ui.router'])
                     });
                     
                     this.ouvrirEvenement = function(id){
-                        ID = id;
+                        ID_EVENEMENT = id;
                         $state.go("afficherEvenement"
                         //,{param1: id}
                                 );

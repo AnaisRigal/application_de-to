@@ -5,8 +5,48 @@
                             <h5>Informations de l'évènement</h5>
                         </div>
                         <div class="panel-body">
-                            <label  class="col-sm-3 col-xs-12 control-label">{{id}}</label>
+                            <table class="table table-hover">
+                                <tbody>
+                                    <tr>
+                                        <td><label  class="col-sm-3 col-xs-12 control-label">Nom</label></td>
+                                        <td><p>{{nom}}</p></td>
+                                    </tr>
+                                     <tr >
+                                        <td><label  class="col-sm-3 col-xs-12 control-label">Description</label></td>
+                                        <td><p>{{description}}</p></td>
+                                    </tr>
+                                     <tr>
+                                        <td><label  class="col-sm-3 col-xs-12 control-label">Créateur</label></td>
+                                        <td><p>{{idCreateur}}</p></td>
+                                    </tr>
+                                     <tr>
+                                        <td><label  class="col-sm-3 col-xs-12 control-label">Créneaux Final</label></td>
+                                        <td><p>{{creneauFinal}}</p></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                             
+                            <table class="table table-hover" >
+                                <thead>
+                                    <tr >
+                                        <td data-ng-repeat="c in creneaux"><b>{{c.dateHeure}}</b></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-ng-repeat="r in reponses">
+                                        <td tr data-ng-repeat="q in r.quand">
+                                                   <img src="../../img/{{q.dispo}}.png" style="width:7%;">
+                                        <td>{{r.idPers}}</td>
+                                    </tr>
+                                     <tr >
+                                         <td tr data-ng-repeat="c in creneaux"  ng-model="visiteur_c.id" >
+                                             <a href ng-click="changeValue(c.idCreneau)"> ng-src
+                                                 <img   src="../../img/false.png" style="width:7%;" ></a>
+                                         </td>
+                                        <td><input type="text" class="form-control" ng-model="nomVisiteur" placeholder="Visiteur" ng-change=""></td>
+                                     </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>  
