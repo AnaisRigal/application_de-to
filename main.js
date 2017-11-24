@@ -25,14 +25,6 @@ app.use(express.static(__dirname + "/appclt"));
 
 // pour tester les objets /////////////////////////////////////////////////////////////  
 // Constructeur pour les événements simplifiés
-function EvenementSimple(id, nom, description) {
-    // l'id de l'evenement
-    this.id = id;
-    //le nom de l'evenement
-    this.nom = nom;
-    //le nom de l'evenement
-    this.description = description;
-}
 
 app.get('/API/test', function (req, res) {
     res.send('test');
@@ -61,10 +53,10 @@ app.get('/events', function (req, res) {
     });
 });
 
+
+// Crée un nouvel évènement
 app.post('/createEvent', function (req, res) {
     MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
-
-
         if (err) {
             return console.error('Connection failed', err);
         }
@@ -73,14 +65,32 @@ app.post('/createEvent', function (req, res) {
         nomRecu = req.param("nomEvenmt");
         descriptionRecue = req.param("description");
 
-
-        var objNew = {id: "12", nom: nomRecu, description: descriptionRecue};
-
+        var objNew = {id: "20", nom: nomRecu, description: descriptionRecue, creneaux: []};
         db.collection("evenements").insert(objNew, null, function (error, results) {
             if (error)
                 throw error;
-
             console.log("L'événement a bien été inséré");
+        });
+    });
+});
+
+app.patch('/patchEventAddCreneau', function (req, res) {
+    console.log("Tentative d'ajout du créneau");
+
+    MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
+        if (err) {
+            return console.error('Connection failed', err);
+        }
+        var dateHeureRecue = new String;
+        var nomEventRecu = new String;
+        dateHeureRecue = req.param("dateHeure");
+        nomEventRecu = req.param("nomEvenmt");
+        console.log("Tentative d'ajout du créneau");
+        var objNew = {id: "1", dateHeure: dateHeureRecue};
+        db.collection("evenements").update({nom: nomEventRecu}, {$addToSet: {creneaux: objNew}}, function (error, results) {
+            if (error)
+                throw error;
+            console.log("Le créneau a bien été ajouté à l'évènement");
         });
     });
 });
@@ -95,18 +105,6 @@ app.get('/getEvent', function (req, res) {
             var toto = new Evenement(doc.id, doc.nom,doc.description,doc.idCreateur,doc.creneaux,doc.reponses,doc.creneauxFinal);
             res.send(toto);
         })
-       /* db.collection("evenements").findOne({id: parseInt(pid,10)}).toArray(function (error, results) {
-            if (error)
-                throw error;
-
-            results.forEach(function (o, i) {
-                var toto = new EvenementSimple(o.id, o.nom,o.description);
-                  console.log(toto);
-            });
-            //res.send(r);
-            db.close();
-        });
-*/
         
     });
 });
@@ -116,6 +114,19 @@ app.get('/getEvent', function (req, res) {
 app.listen(8080, function () {
     console.log("ça roule")
 });
+
+
+// pour tester les objets /////////////////////////////////////////////////////////////  
+// Constructeur pour les événements simplifiés
+function EvenementSimple(id, nom, description) {
+    // l'id de l'evenement
+    this.id = id;
+    //le nom de l'evenement
+    this.nom = nom;
+    //le nom de l'evenement
+    this.description = description;
+}
+
 
 
 function Evenement(id,nom,description,idCreateur,creneaux,reponses,creneauxFinal) {
@@ -149,3 +160,4 @@ function Evenement(id,nom,description,idCreateur,creneaux,reponses,creneauxFinal
       this.listeReponses.push(reponse);
   }
 }
+
