@@ -63,14 +63,14 @@
                         <div class="panel-body">
                             <label for="operande1" class="col-sm-3 col-xs-12 control-label">Date : </label>
                             <div class="col-sm-8 col-xs-12 form-group">
-                                <input disabled="true"  id="nomCrenaux" disabled="true" type="text" class="form-control" placeholder="0" autofocus tabindex="1" ng-model="data.nom">
+                                <input disabled="true"  id="dateCrenau" type="text" class="form-control" placeholder="0" autofocus tabindex="1" ng-model="dateCreneau">
                             </div>
                             <label for="operande1" class="col-sm-3 col-xs-12 control-label">Heure début : </label>
                             <div class="col-sm-8 col-xs-12 form-group">
-                                <input disabled="true"  id="descCrenaux" disabled="true" type="text" class="form-control" placeholder="0" autofocus tabindex="1" ng-model="data.description">
+                                <input disabled="true"  id="heureDebut" type="text" class="form-control"autofocus tabindex="1" ng-model="heureDebut">
                             </div>
 
-                            <input disabled="true" id="addCrenaux" class="btn btn-lg btn-info btn-block col-sm-3 col-xs-3" type="submit" value="Ajouter le crénau">
+                            <input disabled="true" id="btnAddCrenaux" class="btn btn-lg btn-info btn-block col-sm-3 col-xs-3" type="submit" value="Ajouter le crénau" ng-click="addCreneau()">
                         </div>
                     </div>
                 </div>
