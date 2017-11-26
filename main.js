@@ -16,7 +16,6 @@ var app = express();
 
 var bodyParser = require('body-parser');
 
-
 app.use(bodyParser.json());
 
 // static
@@ -25,12 +24,20 @@ app.use(express.static(__dirname + "/appclt"));
 
 // pour tester les objets /////////////////////////////////////////////////////////////  
 // Constructeur pour les événements simplifiés
+function EvenementSimple(id, nom, description) {
+    // l'id de l'evenement
+    this.id = id;
+    //le nom de l'evenement
+    this.nom = nom;
+    //le nom de l'evenement
+    this.description = description;
+}
 
 app.get('/API/test', function (req, res) {
     res.send('test');
 });
 
-
+// Fait une liste d'évènements
 app.get('/events', function (req, res) {
     MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
         if (err) {
@@ -42,7 +49,7 @@ app.get('/events', function (req, res) {
                 throw error;
 
             results.forEach(function (o, i) {
-                var toto = new EvenementSimple(o.id, o.nom,o.description);
+                var toto = new EvenementSimple(o.id, o.nom);
                 r.push(toto);
                 //  console.log(toto);
             });
@@ -52,7 +59,6 @@ app.get('/events', function (req, res) {
         });
     });
 });
-
 
 // Crée un nouvel évènement
 app.post('/createEvent', function (req, res) {
@@ -94,6 +100,55 @@ app.patch('/patchEventAddCreneau', function (req, res) {
         });
     });
 });
+
+
+app.get('/getEvent', function (req, res) {
+    MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
+        if (err) {
+            return console.error('Connection failed', err);
+        }
+        var pid  = req.param("id");
+        console.log(pid);
+        db.collection("evenements").findOne({id:parseInt(pid,10)}).then(function(doc){
+            var toto = new Evenement(doc.id, doc.nom,doc.description,doc.idCreateur,doc.creneaux,doc.reponses,doc.creneauxFinal);
+            res.send(toto);
+        })
+        db.close();
+    });
+});
+
+
+
+app.listen(8080, function () {
+    console.log("ça roule")
+});
+
+app.get('/getEvent', function (req, res) {
+    MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
+        if (err) {
+            return console.error('Connection failed', err);
+        }
+        var pid  = req.param("id");
+        console.log(pid);
+        db.collection("evenements").findOne({id:parseInt(pid,10)}).then(function(doc){
+            var toto = new EvenementSimple(doc.id, doc.nom,doc.description);
+            console.log(toto);
+        })
+       /* db.collection("evenements").findOne({id: parseInt(pid,10)}).toArray(function (error, results) {
+            if (error)
+                throw error;
+
+            results.forEach(function (o, i) {
+                var toto = new EvenementSimple(o.id, o.nom,o.description);
+                  console.log(toto);
+            });
+            //res.send(r);
+            db.close();
+        });
+*/
+        
+    });
+});
 app.get('/getEvent', function (req, res) {
     MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
         if (err) {
@@ -108,27 +163,6 @@ app.get('/getEvent', function (req, res) {
         
     });
 });
-
-
-
-app.listen(8080, function () {
-    console.log("ça roule")
-});
-
-
-// pour tester les objets /////////////////////////////////////////////////////////////  
-// Constructeur pour les événements simplifiés
-function EvenementSimple(id, nom, description) {
-    // l'id de l'evenement
-    this.id = id;
-    //le nom de l'evenement
-    this.nom = nom;
-    //le nom de l'evenement
-    this.description = description;
-}
-
-
-
 function Evenement(id,nom,description,idCreateur,creneaux,reponses,creneauxFinal) {
   // l'id de l'evenement
   this.id = id;
@@ -152,7 +186,7 @@ function Evenement(id,nom,description,idCreateur,creneaux,reponses,creneauxFinal
   //fonctionst 
   this.ajouterCreneau =function(dateHeure){
       creneau = new Creneau((this.lastIdCreneau+1),dateHeure);
-	  this.lastIdCreneau = this.lastIdCreneau+1;
+      this.lastIdCreneau = this.lastIdCreneau+1;
       this.listeCreneaux.push(creneau);
   }
   this.ajouterReponse =function(idPers, idCreneaux, dispo){
@@ -160,4 +194,3 @@ function Evenement(id,nom,description,idCreateur,creneaux,reponses,creneauxFinal
       this.listeReponses.push(reponse);
   }
 }
-
