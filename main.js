@@ -187,6 +187,29 @@ app.get('/getEvent', function (req, res) {
         
     });
 });
+
+
+app.get('/getIdMax', function (req, res) {
+    MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
+        if (err) {
+            return console.error('Connection failed', err);
+        }
+        var r = new Array();
+        db.collection("evenements").find({}).sort({"id":-1}).limit(1).toArray(function (error, results) {
+            if (error)
+                throw error;
+
+            results.forEach(function (o, i) {
+                var toto = new EvenementSimple(o.id);
+                r.push(toto);
+                //  console.log(toto);
+            });
+            //res.send(r);
+            db.close();
+            res.send(r);
+        });
+    });
+});
 function Evenement(id,nom,description,idCreateur,creneaux,reponses,creneauxFinal) {
   // l'id de l'evenement
   this.id = id;
