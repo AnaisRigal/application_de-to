@@ -18,6 +18,8 @@ var bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
 
+var idMax = 0;
+
 // static
 // partie page WEB 
 app.use(express.static(__dirname + "/appclt"));
@@ -32,6 +34,9 @@ function EvenementSimple(id, nom, description) {
     //le nom de l'evenement
     this.description = description;
 }
+
+
+
 
 app.get('/API/test', function (req, res) {
     res.send('test');
@@ -70,8 +75,8 @@ app.post('/createEvent', function (req, res) {
         var descriptionRecue = new String;
         nomRecu = req.param("nomEvenmt");
         descriptionRecue = req.param("description");
-
-        var objNew = {id: "20", nom: nomRecu, description: descriptionRecue, creneaux: []};
+        idMax+=1;
+        var objNew = {id: idMax, nom: nomRecu, description: descriptionRecue, creneaux: []};
         db.collection("evenements").insert(objNew, null, function (error, results) {
             if (error)
                 throw error;
@@ -144,7 +149,27 @@ app.get('/getEvent', function (req, res) {
 
 
 app.listen(8080, function () {
-    console.log("ça roule")
+    console.log("Démarrage de l'application");
+     MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
+        if (err) {
+            return console.error('Connection failed', err);
+        }
+        
+        var r = 0;
+        db.collection("evenements").find({}).sort({"id":-1}).limit(1).toArray(function (error, results) {
+            if (error)
+                throw error;
+
+            results.forEach(function (o, i) {
+                r = o.id;
+                
+            });
+            idMax = r;
+            console.log("L'id maximum est "+idMax);
+            db.close();
+            
+        });
+    });
 });
 
 app.get('/getEvent', function (req, res) {
@@ -158,18 +183,6 @@ app.get('/getEvent', function (req, res) {
             var toto = new EvenementSimple(doc.id, doc.nom,doc.description);
             console.log(toto);
         })
-       /* db.collection("evenements").findOne({id: parseInt(pid,10)}).toArray(function (error, results) {
-            if (error)
-                throw error;
-
-            results.forEach(function (o, i) {
-                var toto = new EvenementSimple(o.id, o.nom,o.description);
-                  console.log(toto);
-            });
-            //res.send(r);
-            db.close();
-        });
-*/
         
     });
 });
@@ -189,27 +202,8 @@ app.get('/getEvent', function (req, res) {
 });
 
 
-app.get('/getIdMax', function (req, res) {
-    MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
-        if (err) {
-            return console.error('Connection failed', err);
-        }
-        var r = new Array();
-        db.collection("evenements").find({}).sort({"id":-1}).limit(1).toArray(function (error, results) {
-            if (error)
-                throw error;
+   
 
-            results.forEach(function (o, i) {
-                var toto = new EvenementSimple(o.id);
-                r.push(toto);
-                //  console.log(toto);
-            });
-            //res.send(r);
-            db.close();
-            res.send(r);
-        });
-    });
-});
 function Evenement(id,nom,description,idCreateur,creneaux,reponses,creneauxFinal) {
   // l'id de l'evenement
   this.id = id;
