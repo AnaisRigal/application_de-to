@@ -102,6 +102,30 @@ app.patch('/patchEventAddCreneau', function (req, res) {
 });
 
 
+app.patch('/addReponse', function (req, res) {
+
+    MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
+        if (err) {
+            return console.error('Connection failed', err);
+        }
+        var reponseVisiteur = req.param("reponseVisiteur");
+        var rep;
+        var qd = new Array();
+        for (i in reponseVisiteur.quand){
+            qd.push({idCreneau : reponseVisiteur.quand[i].idCreneau,
+                dispo :reponseVisiteur.quand[i].dispo}); 
+        }
+        rep = {idPers : reponseVisiteur.idPers, quand : qd }; 
+        var idEvenement = req.param("idEvenement");
+        console.log(rep+" "+idEvenement);
+        db.collection("evenements").update({id: idEvenement}, {$addToSet: {reponses: rep}}, function (error, results) {
+            if (error)
+                throw error;
+            console.log("Le créneau a bien été ajouté à l'évènement");
+        });
+    });
+});
+
 app.get('/getEvent', function (req, res) {
     MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
         if (err) {

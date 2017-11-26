@@ -34,12 +34,28 @@
                                 </thead>
                                 <tbody>
                                     <tr data-ng-repeat="r in reponses">
-                                        <td tr data-ng-repeat="q in r.quand">
-                                                   <img src="../../img/{{q.dispo}}.png" style="width:7%;">
-                                        <td>{{r.idPers}}</td>
+                                       
+                                                
+                                     
+                                                <td data-ng-repeat="q in r.quand">
+                                                           <img src="../../img/{{q.dispo}}.png" style="width:20px;">
+                                                <td>{{r.idPers}}</td>
+                                            
                                     </tr>
+                                    <tr >
+                                        <td  data-ng-repeat="q in reponseVisiteur.quand">
+                                                    <a href ng-click="changeValue(q.idCreneau)"> 
+                                                        <img   src="../../img/{{q.dispo}}.png" style="width:20px;" >
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" ng-model="nomVisiteur" placeholder="Visiteur" >
+                                                </td>
+                                     </tr>
                                 </tbody>
                             </table>
+                             <button type="button" class="btn btn-success" ng-click="soumettre()">Envoyer ma réponse</button>
+                            {{message}}
                         </div>
                     </div>
                 </div>  

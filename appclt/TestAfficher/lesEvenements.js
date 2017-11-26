@@ -12,6 +12,7 @@ angular.module("app", ['ui.router'])
                     this.id = id;
                     this.nom = nom;
                   }
+                  
                 EvenementSimple.prototype.print = function () {
                     return this.id + ' ' + this.nom;
                 };
@@ -37,6 +38,7 @@ angular.module("app", ['ui.router'])
     .component("afficherEvenement", {
         controller:["$scope","$http","$state","$stateParams", function($scope,$http,$state,$stateParams) { 
                 //$scope.id=   $stateParams.param1;
+                 $scope.message ="";
                   $scope.id = ID_EVENEMENT;
                    // console.log( $scope.id);
                   
@@ -60,11 +62,12 @@ angular.module("app", ['ui.router'])
                         $scope.reponses = d.reponses;
                         
                         var quand = new Array();
-                        for (c in d.creneaux){
-                            quand.push({idCreneau : c.idCreneau, dispo :"false"});
+                        for (c in $scope.creneaux){
+                            var i = parseInt($scope.creneaux[c].idCreneau,10);
+                            quand.push({idCreneau: i, dispo:"false"});
                         }
-                        $scope.reponses.push({idPers:"Visiteur",quand});
-                        console.log($scope.reponses);
+                        $scope.reponseVisiteur={idPers:"Visiteur",quand};
+                      
                          }
                          
                     }, function (response) {
@@ -73,9 +76,37 @@ angular.module("app", ['ui.router'])
                     });
                     
                 $scope.changeValue = function(id){
+                    for (qd in $scope.reponseVisiteur.quand){
+                        q = $scope.reponseVisiteur.quand[qd];
+                        console.log(q);
+                        if (q.idCreneau==id){
+                            if (q.dispo == "false")
+                                q.dispo = "true";
+                            else 
+                                q.dispo ="false";
+                        }
+                    }
                     console.log(id);
+                    console.log($scope.reponseVisiteur);
                     
                 }
+                
+                $scope.soumettre = function(){
+                    $scope.reponseVisiteur.idPers = $scope.nomVisiteur;
+                    console.log($scope.reponseVisiteur);
+                     var data = {
+                        idEvenement: ID_EVENEMENT,
+                        reponseVisiteur:$scope.reponseVisiteur }
+                    $http.patch('/addReponse', JSON.stringify(data)).then(function (response) {
+                        if (response.data)
+                            $scope.msg = "patch Data Submitted Successfully!";
+
+                    }, function (response) {
+                        $scope.msg = "Service not Exists";
+                    });
+                    $scope.message = "Votre réponse a bien été prise en compte, merci :) ";
+                }
+                  
                    
                     
                 }],
