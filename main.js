@@ -94,10 +94,12 @@ app.patch('/patchEventAddCreneau', function (req, res) {
         }
         var dateHeureRecue = new String;
         var nomEventRecu = new String;
+        var idCrenauxRecu = new String;
         dateHeureRecue = req.param("dateHeure");
         nomEventRecu = req.param("nomEvenmt");
+        idCrenauxRecu = req.param("idCreneau");
         console.log("Tentative d'ajout du créneau");
-        var objNew = {id: "1", dateHeure: dateHeureRecue};
+        var objNew = {id: idCrenauxRecu, dateHeure: dateHeureRecue};
         db.collection("evenements").update({nom: nomEventRecu}, {$addToSet: {creneaux: objNew}}, function (error, results) {
             if (error)
                 throw error;

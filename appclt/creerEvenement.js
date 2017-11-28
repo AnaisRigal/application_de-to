@@ -4,6 +4,8 @@ app.controller('Create', function ($scope, $http) {
     $scope.nomEvenmt = null;
     $scope.description = null;
     $scope.msg = null;
+    $scope.creneaux = []; 
+    var compteurC = 0;
 
     // Créer un évènement 
     $scope.createEvent = function (nomEvenmt, description) {
@@ -30,10 +32,12 @@ app.controller('Create', function ($scope, $http) {
 
     // Créer un créneau (on passe le nom de l'événement en paramètres pour le mettre à jour 
     $scope.addCreneau = function (dateHeure) {
+        compteurC = compteurC + 1;
         var data = {
             nomEvenmt: $scope.nomEvenmt,
-            dateHeure: $scope.dateCreneau + "T" + $scope.heureDebut + "Z"
-            //ISODate("1999-11-10T00:00:00Z").getHours();
+            idCreneau : compteurC, 
+            dateHeure: "Date : " + $scope.dateCreneau + ", heure : " + $scope.heureDebut
+                    //ISODate("1999-11-10T00:00:00Z").getHours();
         };
         console.log(data);
         $http.patch('/patchEventAddCreneau', JSON.stringify(data)).then(function (response) {
@@ -43,6 +47,9 @@ app.controller('Create', function ($scope, $http) {
         }, function (response) {
             $scope.msg = "Service not Exists";
         });
+        $scope.creneaux.push("Date : " + $scope.dateCreneau + ", heure : " + $scope.heureDebut);
+         $scope.dateCreneau = "";
+         $scope.heureDebut = "" ;
     };
 });
 
