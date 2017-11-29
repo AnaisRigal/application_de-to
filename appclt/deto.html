@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>DE - TO !</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>         
+   
+        <script src="//unpkg.com/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
+        <script type="text/javascript" src="controllers.js"></script>
+
+    </head>
+        
+<body >
+   <div ng-app="app"> 
+    <div class="container">
+ <link rel="stylesheet" href="http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css">
+
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">De-To</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="navbar-collapse" style="padding-left: 0px" id="bs-megadropdown-tabs">
+        <ul class="nav navbar-nav">
+            <li><a href="#"><i class="fa fa-calendar"></i> Mes évènements</a></li>
+             <li><a href="#"><i class="fa fa-calendar-plus-o"></i> Créer un nouvel évènement</a></li>
+
+        </ul>
+        
+        <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <strong>{{utilisateur.nom}}</strong>
+                    </a>
+                   
+                </li>
+            <li class="dropdown">
+              <a href="#" class="nav-link"><i class="fa fa-bell-o"></i></a>
+            </li>
+        </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<!-- :::::::::::::::::::::::::::::::::::::::::CONTENU DE LA PAGE ::::::::::::::::::::::::::::::::::::::::::-->
+
+
+    </div>
+    
+   <ui-view></ui-view>
+   </div>
+    
+    
+        </body>
+</html>
