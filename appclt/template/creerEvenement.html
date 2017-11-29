@@ -1,0 +1,62 @@
+        <div class="container-fluid" ng-controller="Create">
+
+            <div class="row">
+
+                <div id="creerMonEvenement" class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h5>Informations de l'évènement</h5>
+                        </div>
+                        <div class="panel-body">
+                            <label for="operande1" class="col-sm-3 col-xs-12 control-label">Nom : </label>
+                            <div class="col-sm-8 col-xs-12 form-group">
+                                <input type="text" class="form-control" id="nomEvenmt" autofocus tabindex="1"  ng-model="nomEvenmt"> 
+                            </div>
+                            <label for="operande1" class="col-sm-3 col-xs-12 control-label">Description : </label>
+                            <div class="col-sm-8 col-xs-12 form-group">
+                                <input type="text" class="form-control" id="description" autofocus tabindex="1" ng-model="description">
+                            </div>
+                            <input id="btnCreer" class="btn btn-lg btn-primary btn-block col-sm-3 col-xs-3" type="submit" value="Créer l'évènement" ng-click="createEvent()">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-12" >
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading" >
+                            <h5>Liste des crénaux</h5>
+                            <ul>
+                                <li ng-repeat="c in creneaux">{{c}}</li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h5>Ajouter un créneau</h5>
+                        </div>
+                        <div class="panel-body">
+                            <label for="operande1" class="col-sm-3 col-xs-12 control-label">Date : </label>
+                            <div class="col-sm-8 col-xs-12 form-group">
+                                <input disabled="true"  id="dateCrenau" type="text" class="form-control" placeholder="JJ-MM-YYYY" autofocus tabindex="1" ng-model="dateCreneau">
+                            </div>
+                            <label for="operande1" class="col-sm-3 col-xs-12 control-label">Heure début : </label>
+                            <div class="col-sm-8 col-xs-12 form-group">
+                                <input disabled="true"  id="heureDebut" type="text" class="form-control"autofocus tabindex="1" placeholder="hh:mm:ss" ng-model="heureDebut">
+                            </div>
+
+                            <input disabled="true" id="btnAddCrenaux" class="btn btn-lg btn-info btn-block col-sm-3 col-xs-3" type="submit" value="Ajouter le crénau" ng-click="addCreneau()">
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>   
+
+
+

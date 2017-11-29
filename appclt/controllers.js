@@ -134,9 +134,19 @@ angular.module("app", ['ui.router'])
                                 );
                     };
                     
-                    
+                    this.goToPageCreerEvenement = function()
+                    {
+                        $state.go("creerEvenement");
+                        console.log("coucou");
+                    }
                 }],
                 templateUrl: 'template/listeEvenements.html'  
+            })
+        .component("creerEvenement", {
+        controller:["$scope","$http","$state", function($scope,$http,$state) { 
+                    
+                }],
+                templateUrl: 'template/creerEvenement.html'  
             })
         .config(["$stateProvider", "$urlServiceProvider", function ($stateProvider, $urlServiceProvider) {
                $urlServiceProvider.rules.otherwise({state: 'evenements'});
@@ -151,5 +161,10 @@ angular.module("app", ['ui.router'])
                $stateProvider.state('afficherEvenement', {
                     url: '/afficheEvenement',
                     component : 'afficherEvenement'
+                });
+                
+                $stateProvider.state('creerEvenement', {
+                    url: '/creerEvenement',
+                    component : 'creerEvenement'
                 });
             }]);
