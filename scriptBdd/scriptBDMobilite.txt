@@ -1,0 +1,59 @@
+use mobilitedb
+
+db.users.remove({})
+db.evenements.remove({})
+
+db.users.insert({idUser: "Nol", nom: "Nolwenn Pillard", mdp: "Nol", afficherNotif: "true", notifs:[{"idEvenement":1,"msg":"Voici le message à afficher lors de la connexion de l'user :D !"}]});
+ 
+db.users.insert({idUser: "Anais", nom: "Anais Rigal", mdp: "Anais", afficherNotif: "false"});
+
+db.users.insert({idUser: "Marine", nom: "Marine Sutarik", mdp: "Marine", afficherNotif: "true", notifs:[{"idEvenement":1,"msg":"Voici le message à afficher lors de la connexion de l'user :D !"}]});
+ 
+db.users.insert({idUser: "Vivien", nom: "Vivien Tournie", mdp: "Vivien", afficherNotif: "false"});
+  
+  
+db.evenements.insert({id:1, nom:"Mariage de Mamie", description:"Nous allons faire une petite fête pour faire la fête ...", idCreateur:"Nol", creneauFinal:{"idCreneau":1, "dateHeure":"Date : 14-11-2017, heure : 20:00:00"}, 
+creneaux : [{"idCreneau":1, "dateHeure":"Date : 14-11-2017, heure : 20:00:00"},
+	{"idCreneau":2, "dateHeure":"Date : 26-11-2017, heure : 18:00:00"},
+	{"idCreneau":3, "dateHeure":"Date : 30-11-2017, heure : 23:00:00"}], 
+reponses : [{"idPers":"Nol", 
+"quand":[{"idCreneau" : 1 , "dispo":"true"},
+	 {"idCreneau" :2 , "dispo":"false"},
+	 {"idCreneau" : 3 , "dispo":"false"}]},
+ {"idPers":"Anais", 
+ "quand":[{"idCreneau" : 1 , "dispo":"false"},
+	{ "idCreneau" : 2 , "dispo":"false"}, 
+	{ "idCreneau" : 3 , "dispo":"true"}]},
+{"idPers":"Marine",
+"quand": [{"idCreneau" : 1 , "dispo":"false"},
+	{"idCreneau" : 2 , "dispo":"false"},
+	{ "idCreneau" : 3 , "dispo":"true"}]}, 
+{"idPers":"Vivien", 
+"quand":[{"idCreneau" : 1 , "dispo":"false"},
+	{ "idCreneau" : 2 , "dispo":"true"},
+	{ "idCreneau" : 3 , "dispo":"false"}]}]});
+	
+	
+db.evenements.insert({id:2, nom:"Enterrement de vie de garçon de Z", description:"Nous allons faire une petite fête pour faire la fête ...", idCreateur:"Anais", creneaux : [{"idCreneau":1, "dateHeure":"Date : 14-10-2017, heure : 20:00:00"},{"idCreneau":2, "dateHeure":"Date : 26-11-2017, heure : 18:00:00"},{"idCreneau":3, "dateHeure":"Date : 30-11-2017, heure : 23:00:00"}], 
+reponses : [{"idPers":"Nol", 
+	"quand": [{"idCreneau" : 1 , "dispo":"true"}, 
+	{"idCreneau" :2 , "dispo":"false"},
+	{"idCreneau" : 3 , "dispo":"false"}]},
+	{"idPers":"Anais", 
+	"quand":[{
+		"idCreneau" : 1 , "dispo":"false"},
+		{"idCreneau" : 2 , "dispo":"false"}, 
+		{ "idCreneau" : 3 , "dispo":"true"}]},
+		
+	{"idPers":"Marine", 
+	"quand":[{"idCreneau" : 1 , "dispo":"false"},
+	{ "idCreneau" : 2 , "dispo":"false"},
+	{ "idCreneau" : 3 , "dispo":"true"}]}]});
+
+db.evenements.insert({id:3, nom:"Nouvel an", description:"Nous allons faire une petite fête pour faire la fête ...", idCreateur:"Anais", creneaux : [{"idCreneau":1, "dateHeure":"Date : 14-10-2017, heure : 20:00:00"},{"idCreneau":2, "dateHeure":"Date : 26-11-2017, heure : 18:00:00"},{"idCreneau":3, "dateHeure":"Date : 30-11-2017, heure : 23:00:00"}]});
+
+
+
+
+
+
