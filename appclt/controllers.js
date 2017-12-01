@@ -63,7 +63,7 @@ angular.module("app", ['ui.router'])
                         if (d.creneauFinal== null){
                              $scope.creneauFinal = "Aucun pour l'instant"
                         }else{
-                            $scope.creneauFinal = d.creneauFinal;
+                            $scope.creneauFinal = d.creneauFinal.dateHeure;
                         }
                         
                         $scope.creneaux = d.creneaux;
@@ -119,7 +119,12 @@ angular.module("app", ['ui.router'])
                 }
                  $scope.gocloturer = function()
                     {
+                        if ($scope.creneauFinal == "Aucun pour l'instant"){
                         $state.go("cloturer");
+                        
+                        }else{
+                            $scope.message = "Non, on ne cloture pas un event cloturé !!!"
+                        }
                     }
                    $scope.goToPageMesEvenement = function()
                     {
@@ -135,7 +140,7 @@ angular.module("app", ['ui.router'])
             })
          .component("cloturer", {
         controller:["$scope","$http","$state","$stateParams", function($scope,$http,$state,$stateParams) { 
-            
+                $scope.idSelection;
                  $scope.message ="";
                   $scope.id = ID_EVENEMENT;
                   
@@ -177,9 +182,12 @@ angular.module("app", ['ui.router'])
                             if (n>max){
                                 max = n;
                                 idCreneauxMax = c.idCreneau;
+                                $scope.dateHeureSelect = c.dateHeure;
                             }
                           //  console.log($scope.nbPresent);
                             $scope.message = "Le créneaux où nous avons le plus de participant est le "+idCreneauxMax+" avec "+n+" participations";
+                            $scope.idSelection = idCreneauxMax;
+                            $scope.messageSelection = "Créneau sélectionné "+$scope.dateHeureSelect;
                         }
                          }
                          
@@ -188,9 +196,31 @@ angular.module("app", ['ui.router'])
                         console.log(response);
                     });
                     
-               
+               $scope.selectionner = function(id){
+                   $scope.idSelection = id;
+                   var creneauxMax;
+                   for (i_c in  $scope.creneaux){
+                            var c =  $scope.creneaux[i_c];
+                            if (c.idCreneau === id){
+                                $scope.dateHeureSelect = c.dateHeure
+                            }
+                        }
+                    $scope.messageSelection = "Créneau sélectionné "+$scope.dateHeureSelect;
+                }
                 
                 $scope.cloturer = function(){
+                    var data = {
+                        idCreneau:  $scope.idSelection,
+                        dateHeure : $scope.dateHeureSelect,
+                        idEvenement : ID_EVENEMENT};
+                     $http.patch('/addCreneauxFinal', JSON.stringify(data)).then(function (response) {
+                        if (response.data){
+                            console.log("ajout créneau final réussi")
+                        }
+
+                    }, function (response) {
+                        console.log(response);
+                    });
                     $scope.message = "Votre réponse a bien été prise en compte, merci :) ";
                 }
                    $scope.goToPageMesEvenement = function()

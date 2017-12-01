@@ -62,11 +62,14 @@
                                     </tr>
                                 </tbody>
                             </table>
-  
+                            <div class="alert alert-info">
+                            {{messageSelection}}
+                            </div>
                             <table class="table table-hover" >
                                 <thead>
                                     <tr >
-                                        <td data-ng-repeat="c in creneaux"><b>{{c.dateHeure}}</b></td>
+                                        <td data-ng-repeat="c in creneaux">
+                                            <a href="" ng-click="selectionner(c.idCreneau)"><b>{{c.dateHeure}}</b></a></td>
                                     </tr>
                                 </thead>
                                 <tbody>

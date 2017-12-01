@@ -133,6 +133,24 @@ app.patch('/addReponse', function (req, res) {
     });
 });
 
+app.patch('/addCreneauxFinal', function (req, res) {
+
+    MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
+        if (err) {
+            return console.error('Connection failed', err);
+        }
+        var idEvenement =  req.param("idEvenement");
+        var idCreneau = req.param("idCreneau");
+         var dateHeure = req.param("dateHeure");
+       var update = {idCreneau : idCreneau, dateHeure : dateHeure};
+        db.collection("evenements").update({id: idEvenement}, {$set: {creneauFinal:update}}, function (error, results) {
+            if (error)
+                throw error;
+            console.log("Le créneau final a bien été ajouté à l'évènement");
+        });
+    });
+});
+
 app.get('/getEvent', function (req, res) {
     MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
         if (err) {
@@ -141,7 +159,7 @@ app.get('/getEvent', function (req, res) {
         var pid  = req.param("id");
         console.log(pid);
         db.collection("evenements").findOne({id:parseInt(pid,10)}).then(function(doc){
-            var toto = new Evenement(doc.id, doc.nom,doc.description,doc.idCreateur,doc.creneaux,doc.reponses,doc.creneauxFinal);
+            var toto = new Evenement(doc.id, doc.nom,doc.description,doc.idCreateur,doc.creneaux,doc.reponses,doc.creneauFinal);
             res.send(toto);
         })
         db.close();
