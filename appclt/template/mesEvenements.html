@@ -15,8 +15,8 @@
    
     <div class="navbar-collapse" style="padding-left: 0px" id="bs-megadropdown-tabs">
         <ul class="nav navbar-nav">
-             <li><a href="" ng-click="goToPageMesEvenement()" ><i class="fa fa-calendar"></i> Mes évènements</a></li>
-             <li><a href="" ng-click="goToPageCreerEvenement()"><i class="fa fa-calendar-plus-o"></i> Créer un nouvel évènement</a></li>
+         <li><a href="" ng-click="goToPageMesEvenement()" ><i class="fa fa-calendar"></i> Mes évènements</a></li>
+                <li><a href="" ng-click="goToPageCreerEvenement()"><i class="fa fa-calendar-plus-o"></i> Créer un nouvel évènement</a></li>
                 <li><a href="" ng-click="connexion()"><i class="fa fa-calendar-plus-o"></i> {{messageConnection}}</a></li>
         </ul>
         
@@ -37,7 +37,7 @@
   <!-- ---------------------- Fin du Menu-------------------------------------  -->
 
 </br>
- <h1> Voici les différents évènements : </h1>  
+ <h1> Mes évènements : </h1>  
  </br>
 <div class="panel-body">
 <a href class="list-group-item" ng-repeat="event in events" ng-click="$ctrl.ouvrirEvenement(event.id)">{{event.id}}. {{event.nom}}</a>

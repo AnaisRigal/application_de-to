@@ -1,100 +1,98 @@
- <!-- ----------------------Menu-------------------------------------  -->
+<!-- ----------------------Menu-------------------------------------  -->
 <nav class="navbar navbar-default" role="navigation">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">De-To</a>
-    </div>
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">De-To</a>
+        </div>
 
-   
-    <div class="navbar-collapse" style="padding-left: 0px" id="bs-megadropdown-tabs">
-        <ul class="nav navbar-nav">
-         <li><a href="" ng-click="goToPageMesEvenement()" ><i class="fa fa-calendar"></i> Mes évènements</a></li>
-             <li><a href="" ng-click="goToPageCreerEvenement()"><i class="fa fa-calendar-plus-o"></i> Créer un nouvel évènement</a></li>
-            <li><a href="" ng-click="connection()"><i class="fa fa-calendar-plus-o"></i> {{messageConnection }}</a></li>
-        </ul>
-        
-        <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
+
+        <div class="navbar-collapse" style="padding-left: 0px" id="bs-megadropdown-tabs">
+            <ul class="nav navbar-nav">
+            <li><a href="" ng-click="goToPageMesEvenement()" ><i class="fa fa-calendar"></i> Mes évènements</a></li>
+                <li><a href="" ng-click="goToPageCreerEvenement()"><i class="fa fa-calendar-plus-o"></i> Créer un nouvel évènement</a></li>
+                <li><a href="" ng-click="connexion()"><i class="fa fa-calendar-plus-o"></i> {{messageConnection}}</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <strong>{{utilisateur.nom}}</strong>
                     </a>
-                   
+
                 </li>
-            <li class="dropdown">
-              <a href="#" class="nav-link"><i class="fa fa-bell-o"></i></a>
-            </li>
-        </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+                <li class="dropdown">
+                    <a href="#" class="nav-link"><i class="fa fa-bell-o"></i></a>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
 </nav>
-  <!-- ---------------------- Fin du Menu-------------------------------------  -->
-
-<div class="container-fluid" ng-controller="Create">
-
-            <div class="row">
-
-                <div id="creerMonEvenement" class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h5>Informations de l'évènement</h5>
-                        </div>
-                        <div class="panel-body">
-                            <label for="operande1" class="col-sm-3 col-xs-12 control-label">Nom : </label>
-                            <div class="col-sm-8 col-xs-12 form-group">
-                                <input type="text" class="form-control" id="nomEvenmt" autofocus tabindex="1"  ng-model="nomEvenmt"> 
-                            </div>
-                            <label for="operande1" class="col-sm-3 col-xs-12 control-label">Description : </label>
-                            <div class="col-sm-8 col-xs-12 form-group">
-                                <input type="text" class="form-control" id="description" autofocus tabindex="1" ng-model="description">
-                            </div>
-                            <input id="btnCreer" class="btn btn-lg btn-primary btn-block col-sm-3 col-xs-3" type="submit" value="Créer l'évènement" ng-click="createEvent()">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-12 col-md-12" >
-
-                    <div class="panel panel-info">
-                        <div class="panel-heading" >
-                            <h5>Liste des crénaux</h5>
-                            <ul>
-                                <li ng-repeat="c in creneaux">{{c}}</li>
-                            </ul>
-                        </div>
-                        
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h5>Ajouter un créneau</h5>
-                        </div>
-                        <div class="panel-body">
-                            <label for="operande1" class="col-sm-3 col-xs-12 control-label">Date : </label>
-                            <div class="col-sm-8 col-xs-12 form-group">
-                                <input disabled="true"  id="dateCrenau" type="text" class="form-control" placeholder="JJ-MM-YYYY" autofocus tabindex="1" ng-model="dateCreneau">
-                            </div>
-                            <label for="operande1" class="col-sm-3 col-xs-12 control-label">Heure début : </label>
-                            <div class="col-sm-8 col-xs-12 form-group">
-                                <input disabled="true"  id="heureDebut" type="text" class="form-control"autofocus tabindex="1" placeholder="hh:mm:ss" ng-model="heureDebut">
-                            </div>
-
-                            <input disabled="true" id="btnAddCrenaux" class="btn btn-lg btn-info btn-block col-sm-3 col-xs-3" type="submit" value="Ajouter le crénau" ng-click="addCreneau()">
-                        </div>
-                    </div>
-                </div>
+<!-- ---------------------- Fin du Menu-------------------------------------  -->
+<!-- Conteneur principal -->
 
 
+<div class="row">
+
+    <div id="creerMonEvenement" class="col-xs-12 col-sm-12 col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h5>Informations de l'évènement</h5>
             </div>
-        </div>   
+            <div class="panel-body">
+                <label for="operande1" class="col-sm-3 col-xs-12 control-label">Nom : </label>
+                <div class="col-sm-8 col-xs-12 form-group">
+                    <input type="text" class="form-control" id="nomEvenmt" autofocus tabindex="1"  ng-model="nomEvenmt"> 
+                </div>
+                <label for="operande1" class="col-sm-3 col-xs-12 control-label">Description : </label>
+                <div class="col-sm-8 col-xs-12 form-group">
+                    <input type="text" class="form-control" id="description" autofocus tabindex="1" ng-model="description">
+                </div>
+                <input id="btnCreer" class="btn btn-lg btn-primary btn-block col-sm-3 col-xs-3" type="submit" value="Créer l'évènement" ng-click="createEvent()">
+            </div>
+        </div>
+    </div>
 
+    <div class="col-xs-12 col-sm-12 col-md-12" >
+
+        <div class="panel panel-info">
+            <div class="panel-heading" >
+                <h5>Liste des crénaux</h5>
+                <ul>
+                    <li ng-repeat="c in creneaux">{{c}}</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h5>Ajouter un créneau</h5>
+            </div>
+            <div class="panel-body">
+                <label for="operande1" class="col-sm-3 col-xs-12 control-label">Date : </label>
+                <div class="col-sm-8 col-xs-12 form-group">
+                    <input disabled="true"  id="dateCrenau" type="text" class="form-control" placeholder="JJ-MM-YYYY" autofocus tabindex="1" ng-model="dateCreneau">
+                </div>
+                <label for="operande1" class="col-sm-3 col-xs-12 control-label">Heure début : </label>
+                <div class="col-sm-8 col-xs-12 form-group">
+                    <input disabled="true"  id="heureDebut" type="text" class="form-control"autofocus tabindex="1" placeholder="hh:mm:ss" ng-model="heureDebut">
+                </div>
+
+                <input disabled="true" id="btnAddCrenaux" class="btn btn-lg btn-info btn-block col-sm-3 col-xs-3" type="submit" value="Ajouter le crénau" ng-click="addCreneau()">
+            </div>
+        </div>
+    </div>
+
+
+</div>
 
 

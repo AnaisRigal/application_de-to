@@ -7,7 +7,8 @@ angular.module("app", ['ui.router'])
 
         .service('MonService',["$rootScope", function ($rootScope) {
                 var ID_EVENEMENT ;
-              //  var utilisateur = null;
+               // var etat_connexion = "se déconnecter";
+                //var utilisateur = "null";
              //    $rootScope.$broadcast("LOAD_MEMORY", utilisateur);
                 function EvenementSimple(id,nom) {
                     this.id = id;
@@ -36,7 +37,7 @@ angular.module("app", ['ui.router'])
                   }
         }])
     // Constructeur pour les événements simplifiés
-    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     .component("afficherEvenement", {
         controller:["$scope","$http","$state","$stateParams", function($scope,$http,$state,$stateParams) { 
              /*   if(utilisateur === undefined){
@@ -135,7 +136,7 @@ angular.module("app", ['ui.router'])
                     }
                    $scope.goToPageMesEvenement = function()
                     {
-                        $state.go("evenement");
+                        $state.go("mesEvenements");
                     }
                    $scope.goToPageCreerEvenement = function()
                     {
@@ -145,6 +146,7 @@ angular.module("app", ['ui.router'])
                 }],
                 templateUrl: 'template/afficherEvenement.html'  
             })
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
          .component("cloturer", {
         controller:["$scope","$http","$state","$stateParams", function($scope,$http,$state,$stateParams) { 
                 $scope.idSelection;
@@ -235,7 +237,7 @@ angular.module("app", ['ui.router'])
                 }
                    $scope.goToPageMesEvenement = function()
                     {
-                        $state.go("evenement");
+                        $state.go("mesEvenements");
                     }
                    $scope.goToPageCreerEvenement = function()
                     {
@@ -245,13 +247,16 @@ angular.module("app", ['ui.router'])
                 }],
                 templateUrl: 'template/cloturer.html'  
             })   
+   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         .component("evenements", {
         controller:["$scope","$http","$state", function($scope,$http,$state) { 
-             /*     if(utilisateur === null){
+                 console.log(document.cookie);
+                 if(document.cookie == ""){
                       $scope.messageConnection = "se connecter";
                   }else{
                       $scope.messageConnection = "se déconnecter";
-                  }*/
+                     
+                  }
                    $http({method: 'GET', url:'/events'}).then(function(data, status, headers, config) {
                     $scope.events = new Array();
                     for (var i = 0; i< data.data.length;i++){
@@ -262,17 +267,27 @@ angular.module("app", ['ui.router'])
                     }
                    
                     });
-                    
+                   // $scope.messageConnection = etat_connexion;
                     this.ouvrirEvenement = function(id){
                         ID_EVENEMENT = id;
                         $state.go("afficherEvenement"
                         //,{param1: id}
                                 );
                     };
+                    $scope.connexion = function()
+                    {
+                        if(document.cookie != ""){
+                            document.cookie ="";
+                             $scope.messageConnection = "se connecter";
+                        }else{
+                             $state.go("connexion");
+                         }
+                    }
+                   
                    
                     $scope.goToPageMesEvenement = function()
                     {
-                        $state.go("evenement");
+                        $state.go("mesEvenements");
                     }
                     $scope.goToPageCreerEvenement = function()
                     {
@@ -282,11 +297,63 @@ angular.module("app", ['ui.router'])
                 }],
                 templateUrl: 'template/listeEvenements.html'  
             })
+   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         .component("creerEvenement", {
         controller:["$scope","$http","$state", function($scope,$http,$state) { 
+                
+    $scope.nomEvenmt = null;
+    $scope.description = null;
+    $scope.msg = null;
+    $scope.creneaux = []; 
+    var compteurC = 0;
+
+    // Créer un évènement 
+    $scope.createEvent = function (nomEvenmt, description) {
+        var data = {
+            nomEvenmt: $scope.nomEvenmt,
+            description: $scope.description
+        };
+        console.log(data);
+        $http.post('/createEvent', JSON.stringify(data)).then(function (response) {
+            if (response.data)
+                $scope.msg = "Post Data Submitted Successfully!";
+
+        }, function (response) {
+            $scope.msg = "Service not Exists";
+        });
+        // Affichage de la page  
+        document.getElementById("nomEvenmt").disabled = true
+        document.getElementById("description").disabled = true
+        document.getElementById("btnCreer").disabled = true
+        document.getElementById("dateCrenau").disabled = false
+        document.getElementById("heureDebut").disabled = false
+        document.getElementById("btnAddCrenaux").disabled = false
+    };
+
+    // Créer un créneau (on passe le nom de l'événement en paramètres pour le mettre à jour 
+    $scope.addCreneau = function (dateHeure) {
+        compteurC = compteurC + 1;
+        var data = {
+            nomEvenmt: $scope.nomEvenmt,
+            idCreneau : compteurC, 
+            dateHeure: "Date : " + $scope.dateCreneau + ", heure : " + $scope.heureDebut
+                    //ISODate("1999-11-10T00:00:00Z").getHours();
+        };
+        console.log(data);
+        $http.patch('/patchEventAddCreneau', JSON.stringify(data)).then(function (response) {
+            if (response.data)
+                $scope.msg = "patch Data Submitted Successfully!";
+
+        }, function (response) {
+            $scope.msg = "Service not Exists";
+        });
+        $scope.creneaux.push("Date : " + $scope.dateCreneau + ", heure : " + $scope.heureDebut);
+         $scope.dateCreneau = "";
+         $scope.heureDebut = "" ;
+    };
                    $scope.goToPageMesEvenement = function()
                     {
-                        $state.go("evenement");
+                        $state.go("mesEvenements");
                     }
                     $scope.goToPageCreerEvenement = function()
                     {
@@ -295,6 +362,50 @@ angular.module("app", ['ui.router'])
                 }],
                 templateUrl: 'template/creerEvenement.html'  
             })
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        .component("connexion", {
+        controller:["$scope","$http","$state", function($scope,$http,$state) { 
+                    
+                    $scope.entrez =   function()
+                    {
+                        document.cookie = $scope.prenom;
+                        console.log($scope.prenom+" est connecté ! ");
+                        $state.go("evenements");
+                    }
+                    
+                    
+                   $scope.goToPageMesEvenement = function()
+                    {
+                        $state.go("mesEvenements");
+                    }
+                    $scope.goToPageCreerEvenement = function()
+                    {
+                        $state.go("creerEvenement");
+                    }
+                }],
+                templateUrl: 'template/connexion.html'  
+            })  
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        .component("mesEvenements", {
+        controller:["$scope","$http","$state", function($scope,$http,$state) { 
+       
+       
+       
+       
+                    $scope.goToPageMesEvenement = function()
+                    {
+                        $state.go("mesEvenements");
+                    }
+       
+                    $scope.goToPageCreerEvenement = function()
+                    {
+                        $state.go("creerEvenement");
+                    }
+                }],
+                templateUrl: 'template/mesEvenements.html'  
+            })
+            
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         .config(["$stateProvider", "$urlServiceProvider", function ($stateProvider, $urlServiceProvider) {
                $urlServiceProvider.rules.otherwise({state: 'evenements'});
 
@@ -317,5 +428,15 @@ angular.module("app", ['ui.router'])
                 $stateProvider.state('cloturer', {
                     url: '/cloturer',
                     component : 'cloturer'
+                });
+                
+                $stateProvider.state('connexion', {
+                    url: '/connexion',
+                    component : 'connexion'
+                });
+                
+                $stateProvider.state('mesEvenements', {
+                    url: '/mesEvenements',
+                    component : 'mesEvenements'
                 });
             }]);
