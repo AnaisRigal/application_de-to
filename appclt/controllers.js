@@ -61,7 +61,7 @@ angular.module("app", ['ui.router'])
                         $scope.description = d.description;
                         $scope.idCreateur = d.idCreateur;
                         if (d.creneauFinal== null){
-                             $scope.creneauFinal = "Aucun pour l'instant"
+                             $scope.creneauFinal = "Aucun pour l'instant";
                         }else{
                             $scope.creneauFinal = d.creneauFinal.dateHeure;
                         }
@@ -69,14 +69,20 @@ angular.module("app", ['ui.router'])
                         $scope.creneaux = d.creneaux;
                         $scope.reponses = d.reponses;
                         
-                        var quand = new Array();
-                        for (c in $scope.creneaux){
-                            var i = parseInt($scope.creneaux[c].idCreneau,10);
-                            quand.push({idCreneau: i, dispo:"false"});
-                        }
-                        $scope.reponseVisiteur={idPers:"Visiteur",quand};
-                      
+                        if ($scope.creneauFinal == "Aucun pour l'instant"){
+                            var quand = new Array();
+                            for (c in $scope.creneaux){
+                                var i = parseInt($scope.creneaux[c].idCreneau,10);
+                                quand.push({idCreneau: i, dispo:"false"});
+                            }
+                            $scope.reponseVisiteur={idPers:"Visiteur",quand};
+                            document.getElementById("nomVisiteur").type = "text";
+                         }else{
+                              document.getElementById("buttonCloturer").style.visibility = 'hidden';
+                              document.getElementById("buttonEnvoi").style.visibility = 'hidden';
+                              
                          }
+                     }
                          
                     }, function (response) {
                         $scope.msg = response;
@@ -115,6 +121,7 @@ angular.module("app", ['ui.router'])
                     }, function (response) {
                         $scope.msg = "Service not Exists";
                     });
+                    
                     $scope.message = "Votre réponse a bien été prise en compte, merci :) ";
                 }
                  $scope.gocloturer = function()
@@ -178,6 +185,7 @@ angular.module("app", ['ui.router'])
                                     }
                                 }
                             }
+                            
                             $scope.nbPresent.push(n);
                             if (n>max){
                                 max = n;
@@ -185,10 +193,12 @@ angular.module("app", ['ui.router'])
                                 $scope.dateHeureSelect = c.dateHeure;
                             }
                           //  console.log($scope.nbPresent);
-                            $scope.message = "Le créneaux où nous avons le plus de participant est le "+idCreneauxMax+" avec "+n+" participations";
+                            
+                        }
+                        $scope.message = "Le créneaux où nous avons le plus de participant est le "+idCreneauxMax+" avec "+max+" participations";
                             $scope.idSelection = idCreneauxMax;
                             $scope.messageSelection = "Créneau sélectionné "+$scope.dateHeureSelect;
-                        }
+                        console.log($scope.nbPresent);
                          }
                          
                     }, function (response) {

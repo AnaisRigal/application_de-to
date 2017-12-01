@@ -86,15 +86,15 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" ng-model="nomVisiteur" placeholder="Visiteur" >
+                                                    <input type="hidden" class="form-control" id="nomVisiteur" ng-model="nomVisiteur" placeholder="Visiteur" >
                                                 </td>
                                      </tr>
                                 </tbody>
                             </table>
-                             <button type="button" class="btn btn-success" ng-click="soumettre()">Envoyer ma réponse</button>
+                             <button type="button" id="buttonEnvoi" class="btn btn-success" ng-click="soumettre()">Envoyer ma réponse</button>
                             {{message}}
                         </div>
-                         <button type="button" class="btn btn-success" ng-click="gocloturer()">Cloturer</button>
+                         <button hidden=true id="buttonCloturer"  class="btn btn-success" ng-click="gocloturer()">Cloturer</button>
                             {{message}}
                     </div>
                 </div>  
