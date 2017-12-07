@@ -217,7 +217,7 @@ app.get('/eventsParticipes', function (req, res) {
 
 app.get('/msgToDisplay', function (req, res) {
     MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
-        consol.log("Passe ICI MAIN")
+        console.log("Passe ICI MAIN")
         if (err) {
             return console.error('Connection failed', err);
         }
