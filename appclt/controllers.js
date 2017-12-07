@@ -79,7 +79,8 @@ angular.module("app", ['ui.router'])
                         $scope.msg = response;
                         console.log(response);
                     });
-
+                    
+                    
                     $scope.changeValue = function (id) {
                         console.log(id);
                         for (qd in $scope.reponseVisiteur.quand) {
@@ -118,6 +119,18 @@ angular.module("app", ['ui.router'])
                             $scope.message = "Non, on ne cloture pas un event cloturé !!!"
                         }
                     }
+                    
+                    if (document.cookie == "") {
+                        $scope.messageConnection = "se connecter";
+                    } else {
+                        document.getElementById("nomVisiteur").value = document.cookie;
+                        document.getElementById("nomVisiteur").disabled = true;
+                        $scope.messageConnection = "se déconnecter";
+                        if (document.cookie!=$scope.idCreateur)
+                            document.getElementById("buttonCloturer").disabled = true;
+                        
+                    }
+                    
                     $scope.goToPageMesEvenement = function ()
                     {
                         $state.go("mesEvenements");
@@ -136,7 +149,7 @@ angular.module("app", ['ui.router'])
                     $scope.idSelection;
                     $scope.message = "";
                     $scope.id = ID_EVENEMENT;
-
+                    
                     var data = {id: $scope.id};
                     $http.get('/getEvent', {params: data}).then(function (response) {
                         if (response.data) {
@@ -219,6 +232,7 @@ angular.module("app", ['ui.router'])
                         });
                         $scope.message = "Votre réponse a bien été prise en compte, merci :) ";
                     }
+                    $scope.messageConnection = "se déconnecter";
                     $scope.goToPageMesEvenement = function ()
                     {
                         $state.go("mesEvenements");
@@ -235,11 +249,7 @@ angular.module("app", ['ui.router'])
         .component("evenements", {
             controller: ["$scope", "$http", "$state", function ($scope, $http, $state) {
 
-                    if (document.cookie == "") {
-                        $scope.messageConnection = "se connecter";
-                    } else {
-                        $scope.messageConnection = "se déconnecter";
-                    }
+                    
                     $http({method: 'GET', url: '/events'}).then(function (data, status, headers, config) {
                         $scope.events = new Array();
                         for (var i = 0; i < data.data.length; i++) {
@@ -267,7 +277,11 @@ angular.module("app", ['ui.router'])
                         }
                     }
 
-
+                    if (document.cookie == "") {
+                        $scope.messageConnection = "se connecter";
+                    } else {
+                        $scope.messageConnection = "se déconnecter";
+                    }
                     $scope.goToPageMesEvenement = function ()
                     {
                         $state.go("mesEvenements");
@@ -283,7 +297,7 @@ angular.module("app", ['ui.router'])
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         .component("creerEvenement", {
             controller: ["$scope", "$http", "$state", function ($scope, $http, $state) {
-
+                    
                     $scope.nomEvenmt = null;
                     $scope.description = null;
                     $scope.msg = null;
@@ -334,6 +348,11 @@ angular.module("app", ['ui.router'])
                         $scope.dateCreneau = "";
                         $scope.heureDebut = "";
                     };
+                    if (document.cookie == "") {
+                        $scope.messageConnection = "se connecter";
+                    } else {
+                        $scope.messageConnection = "se déconnecter";
+                    }
                     $scope.goToPageMesEvenement = function ()
                     {
                         $state.go("mesEvenements");
@@ -374,7 +393,7 @@ angular.module("app", ['ui.router'])
 
                     if (document.cookie != "") {
                         var data = {idPers: document.cookie};
-                        
+                         $scope.messageConnection = "se déconnecter";
                         $http.get('/eventsCrees', {params: data}).then(function (response) {
                             if (response.data) {
                                 var d = response.data;
