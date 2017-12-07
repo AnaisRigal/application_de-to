@@ -75,8 +75,9 @@ app.post('/createEvent', function (req, res) {
         var descriptionRecue = new String;
         nomRecu = req.param("nomEvenmt");
         descriptionRecue = req.param("description");
+        createur = req.param("idCreateur");
         idMax+=1;
-        var objNew = {id: idMax, nom: nomRecu, description: descriptionRecue, creneaux: []};
+        var objNew = {id: idMax, nom: nomRecu, description: descriptionRecue,idCreateur:createur, creneaux: []};
         db.collection("evenements").insert(objNew, null, function (error, results) {
             if (error)
                 throw error;
