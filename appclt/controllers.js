@@ -137,7 +137,11 @@ angular.module("app", ['ui.router'])
                     }
                     $scope.goToPageCreerEvenement = function ()
                     {
-                        $state.go("creerEvenement");
+                         if (document.cookie == "") {
+                             $state.go("connexion");
+                         } else {
+                             $state.go("creerEvenement");
+                         }
                     }
 
                 }],
@@ -239,7 +243,11 @@ angular.module("app", ['ui.router'])
                     }
                     $scope.goToPageCreerEvenement = function ()
                     {
-                        $state.go("creerEvenement");
+                        if (document.cookie == "") {
+                             $state.go("connexion");
+                         } else {
+                             $state.go("creerEvenement");
+                         }
                     }
 
                 }],
@@ -249,7 +257,6 @@ angular.module("app", ['ui.router'])
         .component("evenements", {
             controller: ["$scope", "$http", "$state", function ($scope, $http, $state) {
 
-                    
                     $http({method: 'GET', url: '/events'}).then(function (data, status, headers, config) {
                         $scope.events = new Array();
                         for (var i = 0; i < data.data.length; i++) {
@@ -288,7 +295,11 @@ angular.module("app", ['ui.router'])
                     }
                     $scope.goToPageCreerEvenement = function ()
                     {
-                        $state.go("creerEvenement");
+                        if (document.cookie == "") {
+                             $state.go("connexion");
+                         } else {
+                             $state.go("creerEvenement");
+                         }
                     }
 
                 }],
@@ -308,7 +319,8 @@ angular.module("app", ['ui.router'])
                     $scope.createEvent = function (nomEvenmt, description) {
                         var data = {
                             nomEvenmt: $scope.nomEvenmt,
-                            description: $scope.description
+                            description: $scope.description,
+                            idCreateur : document.cookie
                         };
                         console.log(data);
                         $http.post('/createEvent', JSON.stringify(data)).then(function (response) {
@@ -359,7 +371,11 @@ angular.module("app", ['ui.router'])
                     }
                     $scope.goToPageCreerEvenement = function ()
                     {
-                        $state.go("creerEvenement");
+                        if (document.cookie == "") {
+                             $state.go("connexion");
+                         } else {
+                             $state.go("creerEvenement");
+                         }
                     }
                 }],
             templateUrl: 'template/creerEvenement.html'
@@ -382,7 +398,11 @@ angular.module("app", ['ui.router'])
                     }
                     $scope.goToPageCreerEvenement = function ()
                     {
-                        $state.go("creerEvenement");
+                        if (document.cookie == "") {
+                             $state.go("connexion");
+                         } else {
+                             $state.go("creerEvenement");
+                         }
                     }
                 }],
             templateUrl: 'template/connexion.html'
@@ -437,7 +457,11 @@ angular.module("app", ['ui.router'])
                     }
                     $scope.goToPageCreerEvenement = function ()
                     {
-                        $state.go("creerEvenement");
+                       if (document.cookie == "") {
+                             $state.go("connexion");
+                         } else {
+                             $state.go("creerEvenement");
+                         }
                     }
                 }],
             templateUrl: 'template/mesEvenements.html'
