@@ -166,6 +166,47 @@ app.get('/getEvent', function (req, res) {
     });
 });
 
+app.get('/eventsCrees', function (req, res) {
+    MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
+        if (err) {
+            return console.error('Connection failed', err);
+        }
+        
+        var p  = req.param("idPers")
+         var r = new Array();
+        db.collection("evenements").find({idCreateur:p}).toArray(function (error, results) {
+            if (error)
+                throw error;
+            results.forEach(function (o, i) {
+                var toto = new EvenementSimple(o.id, o.nom);
+                r.push(toto);
+            });
+            db.close();
+            res.send(r);
+        });
+    });
+});
+
+app.get('/eventsParticipes', function (req, res) {
+    MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
+        if (err) {
+            return console.error('Connection failed', err);
+        }
+        
+        var p  = req.param("idPers")
+         var r = new Array();
+        db.collection("evenements").find({"reponses.idPers":p}).toArray(function (error, results) {
+            if (error)
+                throw error;
+            results.forEach(function (o, i) {
+                var toto = new EvenementSimple(o.id, o.nom);
+                r.push(toto);
+            });
+            db.close();
+            res.send(r);
+        });
+    });
+});
 
 
 app.listen(8080, function () {
@@ -192,34 +233,7 @@ app.listen(8080, function () {
     });
 });
 
-app.get('/getEvent', function (req, res) {
-    MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
-        if (err) {
-            return console.error('Connection failed', err);
-        }
-        var pid  = req.param("id");
-        console.log(pid);
-        db.collection("evenements").findOne({id:parseInt(pid,10)}).then(function(doc){
-            var toto = new EvenementSimple(doc.id, doc.nom,doc.description);
-            console.log(toto);
-        })
-        
-    });
-});
-app.get('/getEvent', function (req, res) {
-    MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
-        if (err) {
-            return console.error('Connection failed', err);
-        }
-        var pid  = req.param("id");
-        console.log(pid);
-        db.collection("evenements").findOne({id:parseInt(pid,10)}).then(function(doc){
-            var toto = new Evenement(doc.id, doc.nom,doc.description,doc.idCreateur,doc.creneaux,doc.reponses,doc.creneauxFinal);
-            res.send(toto);
-        })
-        
-    });
-});
+
 
 
    

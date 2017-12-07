@@ -37,8 +37,14 @@
   <!-- ---------------------- Fin du Menu-------------------------------------  -->
 
 </br>
- <h1> Mes évènements : </h1>  
+ <h1> Mes évènements crées : </h1>  
  </br>
 <div class="panel-body">
-<a href class="list-group-item" ng-repeat="event in events" ng-click="$ctrl.ouvrirEvenement(event.id)">{{event.id}}. {{event.nom}}</a>
+<a href class="list-group-item" ng-repeat="event in eventsCreer" ng-click="$ctrl.ouvrirEvenement(event.id)">{{event.id}}. {{event.nom}}</a>
+</div>
+ 
+  <h1> Mes évènements participés : </h1>  
+ </br>
+<div class="panel-body">
+<a href class="list-group-item" ng-repeat="event in eventsParticiper" ng-click="$ctrl.ouvrirEvenement(event.id)">{{event.id}}. {{event.nom}}</a>
 </div>
