@@ -35,8 +35,14 @@
   </div><!-- /.container-fluid -->
 </nav>
   <!-- ---------------------- Fin du Menu-------------------------------------  -->
-  
+
 <div class="col-xs-12 col-sm-12 col-md-12">
+</br>
+<div class="panel-body">
+    <a href class="list-group-item" ng-repeat="msgD in messageToDisplay" >{{msgD.idEvenement}}. {{msgD.msg}}</a>
+</div>
+</br>
+</br>
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h5>Informations de l'évènement</h5>

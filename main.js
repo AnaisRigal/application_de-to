@@ -35,6 +35,12 @@ function EvenementSimple(id, nom, description) {
     this.description = description;
 }
 
+// pour tester les objets /////////////////////////////////////////////////////////////  
+// Constructeur pour les  
+function MsgToDisplay(idEvenement, msg) {
+    this.idEvenement = idEvenement;
+    this.msg = msg;
+}
 
 
 
@@ -209,6 +215,28 @@ app.get('/eventsParticipes', function (req, res) {
     });
 });
 
+app.get('/msgToDisplay', function (req, res) {
+    MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
+        consol.log("Passe ICI MAIN")
+        if (err) {
+            return console.error('Connection failed', err);
+        }
+        
+        
+        var p  = req.param("idPers")
+         var r = new Array();
+        db.collection("users").find({"idUser":p , "afficherNotif":true}).toArray(function (error, results) {
+            if (error)
+                throw error;
+            results.forEach(function (o, i) {
+                var toto = new MsgToDisplay(o.idEvenement, o.msg);
+                r.push(toto);
+            });
+            db.close();
+            res.send(r);
+        });
+    });
+});
 
 app.listen(8080, function () {
     console.log("Démarrage de l'application");

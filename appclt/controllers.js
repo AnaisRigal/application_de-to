@@ -43,6 +43,9 @@ angular.module("app", ['ui.router'])
                     $scope.message = "";
                     $scope.id = ID_EVENEMENT;
 
+
+
+
                     var data = {id: $scope.id};
                     $http.get('/getEvent', {params: data}).then(function (response) {
                         if (response.data) {
@@ -79,8 +82,8 @@ angular.module("app", ['ui.router'])
                         $scope.msg = response;
                         console.log(response);
                     });
-                    
-                    
+
+
                     $scope.changeValue = function (id) {
                         console.log(id);
                         for (qd in $scope.reponseVisiteur.quand) {
@@ -95,7 +98,7 @@ angular.module("app", ['ui.router'])
                     }
 
                     $scope.soumettre = function () {
-                         $scope.reponseVisiteur.idPers = document.getElementById("nomVisiteur").value;
+                        $scope.reponseVisiteur.idPers = document.getElementById("nomVisiteur").value;
                         $scope.messageConnection = "se déconnecter";
                         var data = {
                             idEvenement: ID_EVENEMENT,
@@ -119,29 +122,29 @@ angular.module("app", ['ui.router'])
                             $scope.message = "Non, on ne cloture pas un event cloturé !!!"
                         }
                     }
-                    
+
                     if (document.cookie == "") {
                         $scope.messageConnection = "se connecter";
                     } else {
                         document.getElementById("nomVisiteur").value = document.cookie;
                         document.getElementById("nomVisiteur").disabled = true;
                         $scope.messageConnection = "se déconnecter";
-                        if (document.cookie!=$scope.idCreateur)
+                        if (document.cookie != $scope.idCreateur)
                             document.getElementById("buttonCloturer").disabled = true;
-                        
+
                     }
-                    
+
                     $scope.goToPageMesEvenement = function ()
                     {
                         $state.go("mesEvenements");
                     }
                     $scope.goToPageCreerEvenement = function ()
                     {
-                         if (document.cookie == "") {
-                             $state.go("connexion");
-                         } else {
-                             $state.go("creerEvenement");
-                         }
+                        if (document.cookie == "") {
+                            $state.go("connexion");
+                        } else {
+                            $state.go("creerEvenement");
+                        }
                     }
 
                 }],
@@ -153,7 +156,9 @@ angular.module("app", ['ui.router'])
                     $scope.idSelection;
                     $scope.message = "";
                     $scope.id = ID_EVENEMENT;
-                    
+
+                    $scope.messageToDisplay = "Pas de nouveau message !"
+
                     var data = {id: $scope.id};
                     $http.get('/getEvent', {params: data}).then(function (response) {
                         if (response.data) {
@@ -244,10 +249,10 @@ angular.module("app", ['ui.router'])
                     $scope.goToPageCreerEvenement = function ()
                     {
                         if (document.cookie == "") {
-                             $state.go("connexion");
-                         } else {
-                             $state.go("creerEvenement");
-                         }
+                            $state.go("connexion");
+                        } else {
+                            $state.go("creerEvenement");
+                        }
                     }
 
                 }],
@@ -256,6 +261,9 @@ angular.module("app", ['ui.router'])
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         .component("evenements", {
             controller: ["$scope", "$http", "$state", function ($scope, $http, $state) {
+
+
+                    $scope.messageToDisplay = "Pas de nouveau message !"
 
                     $http({method: 'GET', url: '/events'}).then(function (data, status, headers, config) {
                         $scope.events = new Array();
@@ -296,10 +304,10 @@ angular.module("app", ['ui.router'])
                     $scope.goToPageCreerEvenement = function ()
                     {
                         if (document.cookie == "") {
-                             $state.go("connexion");
-                         } else {
-                             $state.go("creerEvenement");
-                         }
+                            $state.go("connexion");
+                        } else {
+                            $state.go("creerEvenement");
+                        }
                     }
 
                 }],
@@ -308,19 +316,21 @@ angular.module("app", ['ui.router'])
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         .component("creerEvenement", {
             controller: ["$scope", "$http", "$state", function ($scope, $http, $state) {
-                    
+
                     $scope.nomEvenmt = null;
                     $scope.description = null;
                     $scope.msg = null;
                     $scope.creneaux = [];
                     var compteurC = 0;
 
+                    $scope.messageToDisplay = "Pas de nouveau message !"
+
                     // Créer un évènement 
                     $scope.createEvent = function (nomEvenmt, description) {
                         var data = {
                             nomEvenmt: $scope.nomEvenmt,
                             description: $scope.description,
-                            idCreateur : document.cookie
+                            idCreateur: document.cookie
                         };
                         console.log(data);
                         $http.post('/createEvent', JSON.stringify(data)).then(function (response) {
@@ -372,10 +382,10 @@ angular.module("app", ['ui.router'])
                     $scope.goToPageCreerEvenement = function ()
                     {
                         if (document.cookie == "") {
-                             $state.go("connexion");
-                         } else {
-                             $state.go("creerEvenement");
-                         }
+                            $state.go("connexion");
+                        } else {
+                            $state.go("creerEvenement");
+                        }
                     }
                 }],
             templateUrl: 'template/creerEvenement.html'
@@ -383,6 +393,8 @@ angular.module("app", ['ui.router'])
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         .component("connexion", {
             controller: ["$scope", "$http", "$state", function ($scope, $http, $state) {
+
+                    $scope.messageToDisplay = "Pas de nouveau message !"
 
                     $scope.entrez = function ()
                     {
@@ -399,10 +411,10 @@ angular.module("app", ['ui.router'])
                     $scope.goToPageCreerEvenement = function ()
                     {
                         if (document.cookie == "") {
-                             $state.go("connexion");
-                         } else {
-                             $state.go("creerEvenement");
-                         }
+                            $state.go("connexion");
+                        } else {
+                            $state.go("creerEvenement");
+                        }
                     }
                 }],
             templateUrl: 'template/connexion.html'
@@ -412,8 +424,29 @@ angular.module("app", ['ui.router'])
             controller: ["$scope", "$http", "$state", function ($scope, $http, $state) {
 
                     if (document.cookie != "") {
+                   
+                            console.log("passe ici CONTROLER");
+                        //document.cookie = nom personne connectée
+
                         var data = {idPers: document.cookie};
-                         $scope.messageConnection = "se déconnecter";
+                        $http.get('/msgToDisplay', {params: data}).then(function (response) {
+                            if (response.data) {
+                                var d = response.data;
+                                $scope.messageToDisplay = new Array();
+                                for (var i = 0; i < d.length; i++) {
+                                    var a = d[i];
+                                    $scope.messageToDisplay.push(a);
+                                }
+                            }
+                        }, function (response) {
+                            console.log(response);
+                        });
+                    }
+                    
+
+                    if (document.cookie != "") {
+                        var data = {idPers: document.cookie};
+                        $scope.messageConnection = "se déconnecter";
                         $http.get('/eventsCrees', {params: data}).then(function (response) {
                             if (response.data) {
                                 var d = response.data;
@@ -426,8 +459,8 @@ angular.module("app", ['ui.router'])
                         }, function (response) {
                             console.log(response);
                         });
-                        
-                         $http.get('/eventsParticipes', {params: data}).then(function (response) {
+
+                        $http.get('/eventsParticipes', {params: data}).then(function (response) {
                             if (response.data) {
                                 var d = response.data;
                                 $scope.eventsParticiper = new Array();
@@ -442,7 +475,7 @@ angular.module("app", ['ui.router'])
                     } else {
                         $state.go("connexion");
                     }
-                    
+
                     this.ouvrirEvenement = function (id) {
                         ID_EVENEMENT = id;
                         $state.go("afficherEvenement"
@@ -457,11 +490,11 @@ angular.module("app", ['ui.router'])
                     }
                     $scope.goToPageCreerEvenement = function ()
                     {
-                       if (document.cookie == "") {
-                             $state.go("connexion");
-                         } else {
-                             $state.go("creerEvenement");
-                         }
+                        if (document.cookie == "") {
+                            $state.go("connexion");
+                        } else {
+                            $state.go("creerEvenement");
+                        }
                     }
                 }],
             templateUrl: 'template/mesEvenements.html'

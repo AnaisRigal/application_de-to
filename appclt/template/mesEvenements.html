@@ -1,50 +1,54 @@
- <!-- ----------------------Menu-------------------------------------  -->
+<!-- ----------------------Menu-------------------------------------  -->
 <nav class="navbar navbar-default" role="navigation">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">De-To</a>
-    </div>
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">De-To</a>
+        </div>
 
-   
-    <div class="navbar-collapse" style="padding-left: 0px" id="bs-megadropdown-tabs">
-        <ul class="nav navbar-nav">
-         <li><a href="" ng-click="goToPageMesEvenement()" ><i class="fa fa-calendar"></i> Mes évènements</a></li>
+
+        <div class="navbar-collapse" style="padding-left: 0px" id="bs-megadropdown-tabs">
+            <ul class="nav navbar-nav">
+                <li><a href="" ng-click="goToPageMesEvenement()" ><i class="fa fa-calendar"></i> Mes évènements</a></li>
                 <li><a href="" ng-click="goToPageCreerEvenement()"><i class="fa fa-calendar-plus-o"></i> Créer un nouvel évènement</a></li>
                 <li><a href="" ng-click="connexion()"><i class="fa fa-calendar-plus-o"></i> {{messageConnection}}</a></li>
-        </ul>
-        
-        <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <strong>{{utilisateur.nom}}</strong>
                     </a>
-                   
-                </li>
-            <li class="dropdown">
-              <a href="#" class="nav-link"><i class="fa fa-bell-o"></i></a>
-            </li>
-        </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-  <!-- ---------------------- Fin du Menu-------------------------------------  -->
 
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link"><i class="fa fa-bell-o"></i></a>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<!-- ---------------------- Fin du Menu-------------------------------------  -->
 </br>
- <h1> Mes évènements crées : </h1>  
- </br>
 <div class="panel-body">
-<a href class="list-group-item" ng-repeat="event in eventsCreer" ng-click="$ctrl.ouvrirEvenement(event.id)">{{event.id}}. {{event.nom}}</a>
+    <a href class="list-group-item" ng-repeat="msgD in messageToDisplay" >{{msgD.idEvenement}}. {{msgD.msg}}</a>
 </div>
- 
-  <h1> Mes évènements participés : </h1>  
- </br>
+</br>
+</br>
+<h1> Mes évènements crées : </h1>  
+</br>
 <div class="panel-body">
-<a href class="list-group-item" ng-repeat="event in eventsParticiper" ng-click="$ctrl.ouvrirEvenement(event.id)">{{event.id}}. {{event.nom}}</a>
+    <a href class="list-group-item" ng-repeat="event in eventsCreer" ng-click="$ctrl.ouvrirEvenement(event.id)">{{event.id}}. {{event.nom}}</a>
+</div>
+
+<h1> Mes évènements participés : </h1>  
+</br>
+<div class="panel-body">
+    <a href class="list-group-item" ng-repeat="event in eventsParticiper" ng-click="$ctrl.ouvrirEvenement(event.id)">{{event.id}}. {{event.nom}}</a>
 </div>

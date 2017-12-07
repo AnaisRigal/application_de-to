@@ -37,8 +37,14 @@
   <!-- ---------------------- Fin du Menu-------------------------------------  -->
 
 </br>
+<div class="panel-body">
+    <a href class="list-group-item" ng-repeat="msgD in messageToDisplay" >{{msgD.idEvenement}}. {{msgD.msg}}</a>
+</div>
+</br>
+</br>
  <h1> Voici les différents évènements : </h1>  
  </br>
 <div class="panel-body">
+   
 <a href class="list-group-item" ng-repeat="event in events" ng-click="$ctrl.ouvrirEvenement(event.id)">{{event.id}}. {{event.nom}}</a>
 </div>
