@@ -432,11 +432,8 @@ angular.module("app", ['ui.router'])
                         $http.get('/msgToDisplay', {params: data}).then(function (response) {
                             if (response.data) {
                                 var d = response.data;
-                                $scope.messageToDisplay = new Array();
-                                for (var i = 0; i < d.length; i++) {
-                                    var a = d[i];
-                                    $scope.messageToDisplay.push(a);
-                                }
+                                $scope.messageToDisplay=d.afficherNotif;
+                                console.log( $scope.messageToDisplay);
                             }
                         }, function (response) {
                             console.log(response);
@@ -475,7 +472,14 @@ angular.module("app", ['ui.router'])
                     } else {
                         $state.go("connexion");
                     }
-
+                    $scope.afficherNotif = function () {
+                        
+                        alert("Un évènement a été cloturé");
+                        //requête pour chercher quel évènement ...
+                        //requête pour enlever le notif à true ! 
+                        $scope.messageToDisplay ="false";
+                        
+                    };
                     this.ouvrirEvenement = function (id) {
                         ID_EVENEMENT = id;
                         $state.go("afficherEvenement"

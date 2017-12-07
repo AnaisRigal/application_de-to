@@ -217,7 +217,6 @@ app.get('/eventsParticipes', function (req, res) {
 
 app.get('/msgToDisplay', function (req, res) {
     MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
-        console.log("Passe ICI MAIN")
         if (err) {
             return console.error('Connection failed', err);
         }
@@ -225,16 +224,11 @@ app.get('/msgToDisplay', function (req, res) {
         
         var p  = req.param("idPers")
          var r = new Array();
-        db.collection("users").find({"idUser":p , "afficherNotif":true}).toArray(function (error, results) {
-            if (error)
-                throw error;
-            results.forEach(function (o, i) {
-                var toto = new MsgToDisplay(o.idEvenement, o.msg);
-                r.push(toto);
-            });
-            db.close();
-            res.send(r);
-        });
+          db.collection("users").findOne({idUser:p }).then(function(doc){
+            var toto = {afficherNotif:doc.afficherNotif};
+            res.send(toto);
+        })
+        
     });
 });
 

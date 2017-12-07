@@ -28,17 +28,17 @@
 
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="nav-link"><i class="fa fa-bell-o"></i></a>
+                    <div ng-if="messageToDisplay == 'true'" >
+                         <a  href="" ng-click="afficherNotif()" class="nav-link"> <i class="fa fa-bell-o"></i> notification</a>
+                    </div>
+                    
+                    
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
 <!-- ---------------------- Fin du Menu-------------------------------------  -->
-</br>
-<div class="panel-body">
-    <a href class="list-group-item" ng-repeat="msgD in messageToDisplay" >{{msgD.idEvenement}}. {{msgD.msg}}</a>
-</div>
 </br>
 </br>
 <h1> Mes évènements crées : </h1>  
