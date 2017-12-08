@@ -169,8 +169,8 @@ app.patch('/ajoutNotif', function (req, res) {
         var idEvenement =  req.param("idEvenement");
         var nom = req.param("nom");
          var idPers = req.param("idPers");
-        
-               db.collection("users").update({idUser: idPers}, {$push: {notifs:{idEvenement:idEvenement,msg:nom+" a été cloturé !"}}}, function (error, results) {
+         
+               db.collection("users").update({idUser: idPers}, {$set: {afficherNotif:"true"},$push: {notifs:{idEvenement:idEvenement,msg:nom+" a été cloturé !"}}}, function (error, results) {
                     if (error)
                         throw error;
                     console.log("Modification des notifs de "+idPers);
@@ -179,7 +179,25 @@ app.patch('/ajoutNotif', function (req, res) {
         db.close();
         });
     });
+app.patch('/enleverNotif', function (req, res) {
 
+    MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
+        if (err) {
+            return console.error('Connection failed', err);
+        }
+        var b = "false";
+        var s ={};
+         var idPers = req.param("idPers");
+        var d = {afficherNotif:b,notifs:s};
+               db.collection("users").update({idUser: idPers}, {$set:d }, function (error, results) {
+                    if (error)
+                        throw error;
+                    console.log("Modification des notifs de "+idPers);
+                });
+         
+        db.close();
+        });
+    });
 
 app.get('/getEvent', function (req, res) {
     MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {

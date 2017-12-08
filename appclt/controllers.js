@@ -80,6 +80,21 @@ angular.module("app", ['ui.router'])
                             if (document.cookie == "") {
                                 $scope.messageConnection = "se connecter";
                             } else {
+                                 var data = {idPers: document.cookie};
+                        $http.get('/msgToDisplay', {params: data}).then(function (response) {
+                            if (response.data) {
+                                var d = response.data;
+                                $scope.isAfficher=d.afficherNotif;
+                                var s ="";
+                                for (i in d.notif){
+                                   var p = d.notif[i];
+                                   s+="numéro de l'évènnement : "+p.idEvenement+ " - "+p.msg;
+                                }
+                                $scope.messageToDisplay = s;
+                            }
+                        }, function (response) {
+                            console.log(response);
+                        });
                                 document.getElementById("nomVisiteur").value = document.cookie;
                                 document.getElementById("nomVisiteur").disabled = true;
                                 $scope.messageConnection = "se déconnecter";
@@ -145,7 +160,15 @@ angular.module("app", ['ui.router'])
                             $state.go("connexion");
                         }
                     }
-
+                     $scope.afficherNotif = function () {
+                        alert($scope.messageToDisplay);
+                         $http.get('/enleverNotif', {params: data}).then(function (response) {
+                        }, function (response) {
+                            console.log(response);
+                        });
+                        $scope.messageToDisplay ="false";
+                        
+                    };
                     $scope.goToPageMesEvenement = function ()
                     {
                         $state.go("mesEvenements");
@@ -170,7 +193,22 @@ angular.module("app", ['ui.router'])
                     $scope.id = ID_EVENEMENT;
 
                     $scope.messageToDisplay = "Pas de nouveau message !"
-
+                     var data = {idPers: document.cookie};
+                        $http.get('/msgToDisplay', {params: data}).then(function (response) {
+                            if (response.data) {
+                                var d = response.data;
+                                $scope.isAfficher=d.afficherNotif;
+                                var s ="";
+                                for (i in d.notif){
+                                   var p = d.notif[i];
+                                   s+="numéro de l'évènnement : "+p.idEvenement+ " - "+p.msg;
+                                }
+                                $scope.messageToDisplay = s;
+                            }
+                        }, function (response) {
+                            console.log(response);
+                        });
+                        
                     var data = {id: $scope.id};
                     $http.get('/getEvent', {params: data}).then(function (response) {
                         if (response.data) {
@@ -280,7 +318,15 @@ angular.module("app", ['ui.router'])
                             $state.go("connexion");
                         }
                     }
-
+                     $scope.afficherNotif = function () {
+                        alert($scope.messageToDisplay);
+                         $http.get('/enleverNotif', {params: data}).then(function (response) {
+                        }, function (response) {
+                            console.log(response);
+                        });
+                        $scope.messageToDisplay ="false";
+                        
+                    };
                     $scope.goToPageMesEvenement = function ()
                     {
                         $state.go("mesEvenements");
@@ -300,7 +346,21 @@ angular.module("app", ['ui.router'])
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         .component("evenements", {
             controller: ["$scope", "$http", "$state", function ($scope, $http, $state) {
-
+                      var data = {idPers: document.cookie};
+                        $http.get('/msgToDisplay', {params: data}).then(function (response) {
+                            if (response.data) {
+                                var d = response.data;
+                                $scope.isAfficher=d.afficherNotif;
+                                var s ="";
+                                for (i in d.notif){
+                                   var p = d.notif[i];
+                                   s+="numéro de l'évènnement : "+p.idEvenement+ " - "+p.msg;
+                                }
+                                $scope.messageToDisplay = s;
+                            }
+                        }, function (response) {
+                            console.log(response);
+                        });
 
                     $scope.messageToDisplay = "Pas de nouveau message !"
 
@@ -335,7 +395,18 @@ angular.module("app", ['ui.router'])
                         $scope.messageConnection = "se connecter";
                     } else {
                         $scope.messageConnection = "se déconnecter";
+                        
                     }
+                     $scope.afficherNotif = function () {
+                        alert($scope.messageToDisplay);
+                        data = {idPers:document.cookie};
+                         $http.get('/enleverNotif', {params: data}).then(function (response) {
+                        }, function (response) {
+                            console.log(response);
+                        });
+                        $scope.messageToDisplay ="false";
+                        
+                    };
                     $scope.goToPageMesEvenement = function ()
                     {
                         $state.go("mesEvenements");
@@ -355,7 +426,7 @@ angular.module("app", ['ui.router'])
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         .component("creerEvenement", {
             controller: ["$scope", "$http", "$state", function ($scope, $http, $state) {
-
+                    
                     $scope.nomEvenmt = null;
                     $scope.description = null;
                     $scope.msg = null;
@@ -363,7 +434,21 @@ angular.module("app", ['ui.router'])
                     var compteurC = 0;
 
                     $scope.messageToDisplay = "Pas de nouveau message !"
-
+                     var data = {idPers: document.cookie};
+                        $http.get('/msgToDisplay', {params: data}).then(function (response) {
+                            if (response.data) {
+                                var d = response.data;
+                                $scope.isAfficher=d.afficherNotif;
+                                var s ="";
+                                for (i in d.notif){
+                                   var p = d.notif[i];
+                                   s+="numéro de l'évènnement : "+p.idEvenement+ " - "+p.msg;
+                                }
+                                $scope.messageToDisplay = s;
+                            }
+                        }, function (response) {
+                            console.log(response);
+                        });
                     // Créer un évènement 
                     $scope.createEvent = function (nomEvenmt, description) {
                         var data = {
@@ -410,10 +495,27 @@ angular.module("app", ['ui.router'])
                         $scope.heureDebut = "";
                     };
                     if (document.cookie == "") {
+                        
                         $scope.messageConnection = "se connecter";
                     } else {
+                         var data = {idPers: document.cookie};
+                        $http.get('/msgToDisplay', {params: data}).then(function (response) {
+                            if (response.data) {
+                                var d = response.data;
+                                $scope.isAfficher=d.afficherNotif;
+                                var s ="";
+                                for (i in d.notif){
+                                   var p = d.notif[i];
+                                   s+="numéro de l'évènnement : "+p.idEvenement+ " - "+p.msg;
+                                }
+                                $scope.messageToDisplay = s;
+                            }
+                        }, function (response) {
+                            console.log(response);
+                        });
                         $scope.messageConnection = "se déconnecter";
                     }
+                    
                     $scope.connexion = function ()
                     {
                         if (document.cookie != "") {
@@ -423,7 +525,15 @@ angular.module("app", ['ui.router'])
                             $state.go("connexion");
                         }
                     }
-
+                     $scope.afficherNotif = function () {
+                        alert($scope.messageToDisplay);
+                         $http.get('/enleverNotif', {params: data}).then(function (response) {
+                        }, function (response) {
+                            console.log(response);
+                        });
+                        $scope.messageToDisplay ="false";
+                        
+                    };
                     $scope.goToPageMesEvenement = function ()
                     {
                         $state.go("mesEvenements");
@@ -452,7 +562,7 @@ angular.module("app", ['ui.router'])
                         $state.go("evenements");
                     }
 
-
+                    
                     $scope.goToPageMesEvenement = function ()
                     {
                         $state.go("mesEvenements");
@@ -472,6 +582,9 @@ angular.module("app", ['ui.router'])
         .component("mesEvenements", {
             controller: ["$scope", "$http", "$state", function ($scope, $http, $state) {
 
+                    
+                    
+
                     if (document.cookie != "") {
                         var data = {idPers: document.cookie};
                         $http.get('/msgToDisplay', {params: data}).then(function (response) {
@@ -488,13 +601,10 @@ angular.module("app", ['ui.router'])
                         }, function (response) {
                             console.log(response);
                         });
-                    }
-                    
-
-                    if (document.cookie != "") {
                         var data = {idPers: document.cookie};
                         $scope.messageConnection = "se déconnecter";
-                        $http.get('/eventsCrees', {params: data}).then(function (response) {
+                        var data = {idPers: document.cookie};
+                        $http.patch('/eventsCrees', {params: data}).then(function (response) {
                             if (response.data) {
                                 var d = response.data;
                                 $scope.eventsCreer = new Array();
@@ -523,10 +633,11 @@ angular.module("app", ['ui.router'])
                         $state.go("connexion");
                     }
                     $scope.afficherNotif = function () {
-                        
                         alert($scope.messageToDisplay);
-                        //requête pour chercher quel évènement ...
-                        //requête pour enlever le notif à true ! 
+                         $http.get('/enleverNotif', {params: data}).then(function (response) {
+                        }, function (response) {
+                            console.log(response);
+                        });
                         $scope.messageToDisplay ="false";
                         
                     };
