@@ -201,7 +201,7 @@ angular.module("app", ['ui.router'])
                                 var s ="";
                                 for (i in d.notif){
                                    var p = d.notif[i];
-                                   s+="numéro de l'évènnement : "+p.idEvenement+ " - "+p.msg;
+                                   s+="numéro de l'évènnement : "+p.idEvenement+ " - "+p.msg+"\n";
                                 }
                                 $scope.messageToDisplay = s;
                             }
