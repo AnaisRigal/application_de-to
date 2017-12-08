@@ -5,7 +5,7 @@ db.evenements.remove({})
 
 db.users.insert({idUser: "Nol", nom: "Nolwenn Pillard", mdp: "Nol", afficherNotif: "true", notifs:[{"idEvenement":1,"msg":"Mariage de Mamie à été cloturé!"}]});
  
-db.users.insert({idUser: "Anais", nom: "Anais Rigal", mdp: "Anais", afficherNotif: "true", notifs:[{"idEvenement":1,"msg":"Mariage de Mamie à été cloturé"}]);
+db.users.insert({idUser: "Anais", nom: "Anais Rigal", mdp: "Anais", afficherNotif: "true", notifs:[{"idEvenement":1,"msg":"Mariage de Mamie à été cloturé"}]});
 
 db.users.insert({idUser: "Marine", nom: "Marine Sutarik", mdp: "Marine", afficherNotif: "true", notifs:[{"idEvenement":1,"msg":"Mariage de Mamie à été cloturé"}]});
  
