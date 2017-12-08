@@ -155,8 +155,31 @@ app.patch('/addCreneauxFinal', function (req, res) {
                 throw error;
             console.log("Le créneau final a bien été ajouté à l'évènement");
         });
+            
+        db.close();
+        });
     });
-});
+
+app.patch('/ajoutNotif', function (req, res) {
+
+    MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
+        if (err) {
+            return console.error('Connection failed', err);
+        }
+        var idEvenement =  req.param("idEvenement");
+        var nom = req.param("nom");
+         var idPers = req.param("idPers");
+        
+               db.collection("users").update({idUser: idPers}, {$push: {notifs:{idEvenement:idEvenement,msg:nom+" a été cloturé !"}}}, function (error, results) {
+                    if (error)
+                        throw error;
+                    console.log("Modification des notifs de "+idPers);
+                });
+         
+        db.close();
+        });
+    });
+
 
 app.get('/getEvent', function (req, res) {
     MongoClient.connect("mongodb://localhost/mobilitedb", function (err, db) {
@@ -225,7 +248,7 @@ app.get('/msgToDisplay', function (req, res) {
         var p  = req.param("idPers")
          var r = new Array();
           db.collection("users").findOne({idUser:p }).then(function(doc){
-            var toto = {afficherNotif:doc.afficherNotif};
+            var toto = {afficherNotif:doc.afficherNotif,notif:doc.notifs};
             res.send(toto);
         })
         

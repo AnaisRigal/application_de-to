@@ -76,6 +76,18 @@ angular.module("app", ['ui.router'])
                                 document.getElementById("buttonEnvoi").style.visibility = 'hidden';
 
                             }
+                            
+                            if (document.cookie == "") {
+                                $scope.messageConnection = "se connecter";
+                            } else {
+                                document.getElementById("nomVisiteur").value = document.cookie;
+                                document.getElementById("nomVisiteur").disabled = true;
+                                $scope.messageConnection = "se déconnecter";
+                                console.log(document.cookie+" != "+$scope.idCreateur);
+                                if (document.cookie != $scope.idCreateur)
+                                    document.getElementById("buttonCloturer").disabled = true;
+
+                            }
                         }
 
                     }, function (response) {
@@ -123,15 +135,15 @@ angular.module("app", ['ui.router'])
                         }
                     }
 
-                    if (document.cookie == "") {
-                        $scope.messageConnection = "se connecter";
-                    } else {
-                        document.getElementById("nomVisiteur").value = document.cookie;
-                        document.getElementById("nomVisiteur").disabled = true;
-                        $scope.messageConnection = "se déconnecter";
-                        if (document.cookie != $scope.idCreateur)
-                            document.getElementById("buttonCloturer").disabled = true;
-
+                    
+                    $scope.connexion = function ()
+                    {
+                        if (document.cookie != "") {
+                            document.cookie = "";
+                            $scope.messageConnection = "se connecter";
+                        } else {
+                            $state.go("connexion");
+                        }
                     }
 
                     $scope.goToPageMesEvenement = function ()
@@ -206,7 +218,6 @@ angular.module("app", ['ui.router'])
                             $scope.message = "Le créneaux où nous avons le plus de participant est le " + idCreneauxMax + " avec " + max + " participations";
                             $scope.idSelection = idCreneauxMax;
                             $scope.messageSelection = "Créneau sélectionné " + $scope.dateHeureSelect;
-                            console.log($scope.nbPresent);
                         }
 
                     }, function (response) {
@@ -231,6 +242,24 @@ angular.module("app", ['ui.router'])
                             idCreneau: $scope.idSelection,
                             dateHeure: $scope.dateHeureSelect,
                             idEvenement: ID_EVENEMENT};
+                        
+                        var taille = $scope.reponses.length;
+                        for(var p =0;p<taille;p++){
+                            var r =  $scope.reponses[p];
+                            var data = {
+                            nom: $scope.nom,
+                            idPers: r.idPers,
+                            idEvenement: ID_EVENEMENT};
+                            console.log(data);
+                            $http.patch('/ajoutNotif', JSON.stringify(data)).then(function (response) {
+                                if (response.data) {
+                                    console.log("ajout créneau final réussi")
+                                }
+
+                            }, function (response) {
+                                console.log(response);
+                            });
+                        }
                         $http.patch('/addCreneauxFinal', JSON.stringify(data)).then(function (response) {
                             if (response.data) {
                                 console.log("ajout créneau final réussi")
@@ -242,6 +271,16 @@ angular.module("app", ['ui.router'])
                         $scope.message = "Votre réponse a bien été prise en compte, merci :) ";
                     }
                     $scope.messageConnection = "se déconnecter";
+                    $scope.connexion = function ()
+                    {
+                        if (document.cookie != "") {
+                            document.cookie = "";
+                            $scope.messageConnection = "se connecter";
+                        } else {
+                            $state.go("connexion");
+                        }
+                    }
+
                     $scope.goToPageMesEvenement = function ()
                     {
                         $state.go("mesEvenements");
@@ -375,6 +414,16 @@ angular.module("app", ['ui.router'])
                     } else {
                         $scope.messageConnection = "se déconnecter";
                     }
+                    $scope.connexion = function ()
+                    {
+                        if (document.cookie != "") {
+                            document.cookie = "";
+                            $scope.messageConnection = "se connecter";
+                        } else {
+                            $state.go("connexion");
+                        }
+                    }
+
                     $scope.goToPageMesEvenement = function ()
                     {
                         $state.go("mesEvenements");
@@ -424,16 +473,17 @@ angular.module("app", ['ui.router'])
             controller: ["$scope", "$http", "$state", function ($scope, $http, $state) {
 
                     if (document.cookie != "") {
-                   
-                            console.log("passe ici CONTROLER");
-                        //document.cookie = nom personne connectée
-
                         var data = {idPers: document.cookie};
                         $http.get('/msgToDisplay', {params: data}).then(function (response) {
                             if (response.data) {
                                 var d = response.data;
-                                $scope.messageToDisplay=d.afficherNotif;
-                                console.log( $scope.messageToDisplay);
+                                $scope.isAfficher=d.afficherNotif;
+                                var s ="";
+                                for (i in d.notif){
+                                   var p = d.notif[i];
+                                   s+="numéro de l'évènnement : "+p.idEvenement+ " - "+p.msg;
+                                }
+                                $scope.messageToDisplay = s;
                             }
                         }, function (response) {
                             console.log(response);
@@ -474,7 +524,7 @@ angular.module("app", ['ui.router'])
                     }
                     $scope.afficherNotif = function () {
                         
-                        alert("Un évènement a été cloturé");
+                        alert($scope.messageToDisplay);
                         //requête pour chercher quel évènement ...
                         //requête pour enlever le notif à true ! 
                         $scope.messageToDisplay ="false";
@@ -487,6 +537,7 @@ angular.module("app", ['ui.router'])
                                 );
                     };
 
+                   
 
                     $scope.goToPageMesEvenement = function ()
                     {
