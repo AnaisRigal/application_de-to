@@ -3,13 +3,13 @@ use mobilitedb
 db.users.remove({})
 db.evenements.remove({})
 
-db.users.insert({idUser: "Nol", nom: "Nolwenn Pillard", mdp: "Nol", afficherNotif: "true", notifs:[{"idEvenement":1,"msg":"Voici le message à afficher lors de la connexion de l'user :D !"}]});
+db.users.insert({idUser: "Nol", nom: "Nolwenn Pillard", mdp: "Nol", afficherNotif: "true", notifs:[{"idEvenement":1,"msg":"Mariage de Mamie à été cloturé!"}]});
  
-db.users.insert({idUser: "Anais", nom: "Anais Rigal", mdp: "Anais", afficherNotif: "false"});
+db.users.insert({idUser: "Anais", nom: "Anais Rigal", mdp: "Anais", afficherNotif: "true", notifs:[{"idEvenement":1,"msg":"Mariage de Mamie à été cloturé"}]);
 
-db.users.insert({idUser: "Marine", nom: "Marine Sutarik", mdp: "Marine", afficherNotif: "true", notifs:[{"idEvenement":1,"msg":"Voici le message à afficher lors de la connexion de l'user :D !"}]});
+db.users.insert({idUser: "Marine", nom: "Marine Sutarik", mdp: "Marine", afficherNotif: "true", notifs:[{"idEvenement":1,"msg":"Mariage de Mamie à été cloturé"}]});
  
-db.users.insert({idUser: "Vivien", nom: "Vivien Tournie", mdp: "Vivien", afficherNotif: "false"});
+db.users.insert({idUser: "Vivien", nom: "Vivien Tournie", mdp: "Vivien", notifs:[{"idEvenement":1,"msg":"Mariage de Mamie à été cloturé"}]});
   
   
 db.evenements.insert({id:1, nom:"Mariage de Mamie", description:"Nous allons faire une petite fête pour faire la fête ...", idCreateur:"Nol", creneauFinal:{"idCreneau":1, "dateHeure":"Date : 14-11-2017, heure : 20:00:00"}, 
